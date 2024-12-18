@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
             backgroundWrapper.style.backgroundColor = "#ffffff";
   
             setTimeout(function () {
-                gambarBlank.src = "Image/Frame 14.svg";
+                gambarBlank.src = "assets/image/Frame 14.svg";
                 gambarBlank.classList.add("fade-in");
   
                 setTimeout(() => {

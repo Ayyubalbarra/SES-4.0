@@ -9,6 +9,7 @@ if (isset($_SESSION['user_id'])) {
 }
 
 ?>
+<?php include('includes/navbar.php'); ?>
 
 
 
@@ -20,60 +21,54 @@ if (isset($_SESSION['user_id'])) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sustainable Lighting</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="assets/css/style.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-  <script src="js/lampu.js" defer></script>
-
-
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
+    </style>
+  <script src="assets/js/script.js" defer></script>
 </head>
+  <Pre>
 
-<body>
-  <header>
-    <nav class="navbar">
-        <div class="logo">
-            <img src="Image/logo hitam.svg" alt="Smart Lighting Solutions Logo">
-        </div>
-        <div class="nav-links">
-            <a href="#">Home</a> <!-- akan tetap disini -->
-            <a href="php/explore.php">Explore</a> <!-- menuju explore.php -->
-            <a href="php/blog.php">Blog</a> <!-- menuju blog.php -->
-        </div>
-        <button class="cta-button">Book a Consultation</button>
-    </nav>
-    
-</header>
+
+
+
+  </Pre>
 
   <!-- Frame 7 - Hero Section -->
 
   <div class="Containerlampu">
-  <!-- Pembungkus latar belakang untuk efek fade -->
-  <div id="backgroundWrapper"></div>
+    <!-- Pembungkus latar belakang untuk efek fade -->
+    <div id="backgroundWrapper"></div>
 
-  <!-- Overlay dengan gambar lampu dan tulisan -->
-  <div class="overlay" id="overlay">
-    <img src="Image/Property 1=Default.svg" alt="Gambar Overlay" class="lampuImage" id="lampuImage">
-    
-    <!-- Tambahkan tulisan di bawah gambar -->
-    <p class="lampuText" id="lampuText">Turn your light up</p>
+    <!-- Overlay dengan gambar lampu -->
+    <div class="overlay" id="overlay">
+      <img src="assets/image/Property 1 Default.svg" alt="Gambar Overlay" class="lampuImage" id="lampuImage">
+
+    </div>
+
+    <!-- Gambar latar belakang yang akan diganti -->
+    <img src="assets/image/Union.svg" alt="Gambar Latar" class="gambarBlank" id="gambarBlank">
   </div>
 
-  <!-- Gambar latar belakang yang akan diganti -->
-  <img src="Image/Union.svg" alt="Gambar Latar" class="gambarBlank" id="gambarBlank">
-</div>
-
-
-  <!-- pembungkus latar belakang untuk efek fade -->
+  <pre>
 
 
 
 
 
+
+
+
+
+
+  </pre>
 
   <!-- Frame 9 - Light Statement -->
   <div class="statement-section">
     <div class="statement-header">
       <p class="statement-text">Light</p>
-      <img src="Image/Hands Cradling Glowing Sphere 1.png" alt="Glowing Sphere" class="statement-image" />
+      <img src="assets/image/Hands Cradling Glowing Sphere 1.png" alt="Glowing Sphere" class="statement-image" />
       <p class="statement-text">is essential to </p>
     </div>
     <div class="statement-body">
@@ -83,6 +78,19 @@ if (isset($_SESSION['user_id'])) {
       <p class="statement-text">the environment.</p>
     </div>
   </div>
+  <pre>
+
+
+
+
+
+
+
+
+
+
+
+</pre>
 
   <!-- Frame 12 - Mission Statement -->
   <div class="mission-section">
@@ -91,29 +99,31 @@ if (isset($_SESSION['user_id'])) {
     </div>
     <div class="mission-content">
       <div class="mission-text">
-        <p >
-          delivering sustainable, smart 
+        <p>
+          delivering sustainable, smart
         </p>
       </div>
-      <div class="mission-text"> 
-        lighting that boosts your 
+      <div class="mission-text">
+        lighting that boosts your
       </div>
       <div class="mission-text">
         productivity while also
       </div>
       <div class="mission-highlight">
         <p class="mission-text">protecting</p>
-        <img src="Image/View of Earth from Space 1.png" alt="Earth from Space" class="mission-image" />
+        <img src="assets/image/View of Earth from Space 1.png" alt="Earth from Space" class="mission-image" />
         <p class="mission-text">the planet.</p>
       </div>
     </div>
   </div>
+
   <pre>
 
 
 
 
-    
+
+
   </pre>
 
   <!-- Frame 21 - Stats & Tagline -->
@@ -134,7 +144,8 @@ if (isset($_SESSION['user_id'])) {
         <h2 class="stat-number">0</h2>
         <p class="stat-title">Carbon Impact</p>
         <p class="stat-description">
-          Designed with sustainability in mind, our energy-efficient technology helps you work <br>smarter without harming
+          Designed with sustainability in mind, our energy-efficient technology helps you work <br>smarter without
+          harming
           the environment.
         </p>
       </div>
@@ -173,62 +184,60 @@ if (isset($_SESSION['user_id'])) {
     <div class="category-grid">
       <!-- Downlight -->
       <div class="category-card">
-        <img src="Image/image 3.png" alt="Downlight" class="category-image">
+        <img src="assets/image/image 3.png" alt="Downlight" class="category-image">
         <p class="category-name">Downlight</p>
       </div>
 
       <!-- Downlight Accent -->
       <div class="category-card">
-        <img src="Image/image 4.png" alt="Downlight Accent" class="category-image">
+        <img src="assets/image/image 4.png" alt="Downlight Accent" class="category-image">
         <p class="category-name">Downlight Accent</p>
       </div>
 
       <!-- Downlight -->
       <div class="category-card">
-        <img src="Image/image 5.png" alt="Downlight" class="category-image">
+        <img src="assets/image/image 5.png" alt="Downlight" class="category-image">
         <p class="category-name">Downlight</p>
       </div>
 
       <!-- Batten -->
       <div class="category-card">
-        <img src="Image/image 6.png" alt="Batten" class="category-image">
+        <img src="assets/image/image 6.png" alt="Batten" class="category-image">
         <p class="category-name">Batten</p>
       </div>
 
       <!-- Gridlight -->
       <div class="category-card">
-        <img src="Image/image 7.png" alt="Gridlight" class="category-image">
+        <img src="assets/image/image 7.png" alt="Gridlight" class="category-image">
         <p class="category-name">Gridlight</p>
       </div>
     </div>
 
     <div class="category-tags">
       <button class="category-tag">Indoor Luminer</span>
-      <button class="category-tag">LED</span>
-      <button class="category-tag">Smart Wiz</span>
-      <button class="category-tag">Smart Hue</span>
-      <button class="category-tag">Luminer Outdoor</span>
+        <button class="category-tag">LED</span>
+          <button class="category-tag">Smart Wiz</span>
+            <button class="category-tag">Smart Hue</span>
+              <button class="category-tag">Luminer Outdoor</span>
     </div>
-
-
-   
-
 
     <div class="luminer-section">
       <h3 class="luminer-title">Indoor Luminer</h3>
       <p class="luminer-description">
-        Using smart LEDs, these lights adapt brightness and <br>color to the time of day, enhancing focus and comfort.<br>
+        Using smart LEDs, these lights adapt brightness and <br>color to the time of day, enhancing focus and
+        comfort.<br>
         Ideal for workspaces and homes, they reduce eye strain<br> while saving energy.
       </p>
       <div class="browse">
         <p>
-          didn’t found what you need? <a href="#">Browse all product <img href="#" src="Image/blackarrow.svg" alt="" /></a>
+          didn’t found what you need? <a href="#">Browse all product <img href="#" src="assets/image/blackarrow.svg"
+              alt="" /></a>
         </p>
       </div>
-      
+
     </div>
 
-   <pre>
+    <pre>
 
 
 
@@ -254,7 +263,7 @@ if (isset($_SESSION['user_id'])) {
           <p>With Four Simple Step</p>
         </div>
       </div>
-      <img src="Image/Hand-held Beacon of Inspiration Against Sunset 1.png" alt="rectangle" width="367" height="390"
+      <img src="assets/image/Hand-held Beacon of Inspiration Against Sunset 1.png" alt="rectangle" width="367" height="390"
         class="steps-image" />
     </div>
     <div class="steps-right">
@@ -328,7 +337,7 @@ if (isset($_SESSION['user_id'])) {
       </div>
     </div>
   </div>
-<pre>
+  <pre>
 
 
 
@@ -337,45 +346,47 @@ if (isset($_SESSION['user_id'])) {
 
 
 
-  
+
 </pre>
 
   <section class="smart-section">
     <div class="smart-container">
-        <!-- Left side - Text content -->
-        <div class="smart-content">
-            <div class="smart-header">
-                <h2>Smarter Light, Better<br>Workspaces, Greener<br>Future.</h2>
-            </div>
-        
-          
-            <div class="smart-text">
-                <p>Take control of your lighting with smart technology that lets you adjust brightness, color, and ambiance with simple voice or app commands. Enjoy energy-efficient solutions that blend functionality with stunning design to elevate any space. Your perfect setup, tailored to your lifestyle.</p>
-            </div>
+      <!-- Left side - Text content -->
+      <div class="smart-content">
+        <div class="smart-header">
+          <h2>Smarter Light, Better<br>Workspaces, Greener<br>Future.</h2>
         </div>
 
-        <!-- Right side - Cards -->
-        <div class="smart-cards">
-            <div class="cards-left">
-                <div class="smart-card horizontal">
-                    <img src="Image/Professional Exchange at Construction Site 1.png" alt="Free Site Survey">
-                    <div class="card-label">Free Site Survey</div>
-                </div>
-            
-                <div class="smart-card horizontal">
-                    <img src="Image/Casual Tech-Engaged Man with Textured Hair 1.png" alt="Control Your Light">
-                    <div class="card-label">Control Your Light</div>
-                </div>
-            </div>
-            
-            <div class="smart-card vertical">
-                <img src="Image/Contemporary Elegance_ The Dance of Light and Shadow 1.png" alt="Energy Efficiency">
-                <div class="card-label">Energy Efficiency Meets Artistry</div>
-            </div>
+
+        <div class="smart-text">
+          <p>Take control of your lighting with smart technology that lets you adjust brightness, color, and ambiance
+            with simple voice or app commands. Enjoy energy-efficient solutions that blend functionality with stunning
+            design to elevate any space. Your perfect setup, tailored to your lifestyle.</p>
         </div>
+      </div>
+
+      <!-- Right side - Cards -->
+      <div class="smart-cards">
+        <div class="cards-left">
+          <div class="smart-card horizontal">
+            <img src="assets/image/Professional Exchange at Construction Site 1.png" alt="Free Site Survey">
+            <div class="card-label">Free Site Survey</div>
+          </div>
+
+          <div class="smart-card horizontal">
+            <img src="assets/image/Casual Tech-Engaged Man with Textured Hair 1.png" alt="Control Your Light">
+            <div class="card-label">Control Your Light</div>
+          </div>
+        </div>
+
+        <div class="smart-card vertical">
+          <img src="assets/image/Contemporary Elegance_ The Dance of Light and Shadow 1.png" alt="Energy Efficiency">
+          <div class="card-label">Energy Efficiency Meets Artistry</div>
+        </div>
+      </div>
     </div>
-</section>
-  
+  </section>
+
 
   <pre>
 
@@ -405,7 +416,7 @@ if (isset($_SESSION['user_id'])) {
   <!-- Frame 57 - Testimonial -->
   <section class="testimonial">
     <div class="testimonial-container">
-      <img src="Image/Futuristic Mesh-Lit Lounge 1.png" alt="Modern Workspace" class="testimonial-image">
+      <img src="assets/image/Futuristic Mesh-Lit Lounge 1.png" alt="Modern Workspace" class="testimonial-image">
 
       <div class="testimonial-content">
         <h2 class="testimonial-title">A better future starts from your workspace</h2>
@@ -413,10 +424,10 @@ if (isset($_SESSION['user_id'])) {
         <div class="testimonial-box">
           <h3 class="testimonial-subtitle">Who have get their light with us</h3>
           <div class="testimonial-quote">
-            <img src="Image/left quote.svg" alt="Quote" class="quote-icon">
+            <img src="assets/image/left quote.svg" alt="Quote" class="quote-icon">
             <p>"I love how effortlessly I can control my lights from my phone. It's not just efficient but also adds a
               touch of modern elegance to my space."</p>
-            <img src="Image/right quote.svg" alt="Quote" class="quote-icon">
+            <img src="assets/image/right quote.svg" alt="Quote" class="quote-icon">
           </div>
         </div>
       </div>
@@ -434,13 +445,21 @@ if (isset($_SESSION['user_id'])) {
 
 
 
-
   </pre>
+  <section class="still-not-sure">
+    <table class="still-not-sure-table">
+      <tr>
+        <!-- Kolom Kiri -->
+        <td class="still-not-sure-title">Still Not Sure?</td>
+        <!-- Kolom Kanan -->
+        <td class="still-not-sure-description">Discover Tips, Trends, and Inspiration </br>for Smarter Living.</td>
+      </tr>
+    </table>
+  </section>
 
   <!-- Frame 75 - Blog Section -->
   <section class="blog-section">
-
-  <div class="blog-header">
+    <div class="blog-header">
       <div class="dropdown-container">
         <select class="dropdown" id="latest-dropdown">
           <option value="latest">Latest</option>
@@ -455,41 +474,42 @@ if (isset($_SESSION['user_id'])) {
         </select>
       </div>
     </div>
+    <div class="card-container">
+      <div class="card">
+        <div class="card-image"></div>
+        <div class="card-content">
+          <h2 class="card-title">Blog Title</h2>
+          <p class="card-description">Beautifully designed components built with Radix UI and Tailwind CSS.</p>
+          <a href="#" class="card-link">Styles for headings, paragraphs, lists...etc</a>
+        </div>
+      </div>
 
-  
-  <div class="card-container">
+      <div class="card">
+        <div class="card-image"></div>
+        <div class="card-content">
+          <h2 class="card-title">Another Blog Title</h2>
+          <p class="card-description">Learn how to craft better UI/UX for your projects with modern tools.</p>
+          <a href="#" class="card-link">Explore styles and techniques...</a>
+        </div>
+      </div>
 
-
-
-  <div class="card">
-    <div class="card-image"></div>
-    <div class="card-content">
-      <h2 class="card-title">Blog Title</h2>
-      <p class="card-description">Beautifully designed components built with Radix UI and custom CSS.</p>
-      <a href="#" class="card-link">Styles for headings, paragraphs, lists...etc</a>
+      <div class="card">
+        <div class="card-image"></div>
+        <div class="card-content">
+          <h2 class="card-title">Yet Another Blog</h2>
+          <p class="card-description">A quick dive into responsive web design and accessibility tips.</p>
+          <a href="#" class="card-link">Discover more...</a>
+        </div>
+      </div>
     </div>
+  </section>
+
+  <!-- Frame 80 - Footer Note -->
+  <div class="footer-note">
+    <p>didn't found what you need? <a href="#" class="browse-link">Browse all product ↗</a></p>
   </div>
 
-  <div class="card">
-    <div class="card-image"></div>
-    <div class="card-content">
-      <h2 class="card-title">Blog Title</h2>
-      <p class="card-description">Beautifully designed components built with Radix UI and custom CSS.</p>
-      <a href="#" class="card-link">Styles for headings, paragraphs, lists...etc</a>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-image"></div>
-    <div class="card-content">
-      <h2 class="card-title">Blog Title</h2>
-      <p class="card-description">Beautifully designed components built with Radix UI and custom CS=S.</p>
-      <a href="#" class="card-link">Styles for headings, paragraphs, lists...etc</a>
-    </div>
-  </div>
-</div>
-</section>
-<pre>
+  <pre>
 
 
 
@@ -512,8 +532,7 @@ if (isset($_SESSION['user_id'])) {
         <p>When artistry meets efficiency, Shine Smarter Work Better</p>
       </div>
     </div>
-
-    <div class="cta-button-r">
+    <div class="cta-button">
       <p>Book a Consultation</p>
     </div>
   </div>
@@ -533,83 +552,27 @@ if (isset($_SESSION['user_id'])) {
 
 </pre>
 
+  <script>
+    // Pilih semua elemen dengan kelas .cta-button
+    const ctaButtons = document.querySelectorAll('.cta-button');
 
-  <!-- Frame 78 - Footer -->
-  <footer>
-    <div class="footer-content">
-        <div class="footer-left">
-            <pre>
-
-
-
-            </pre>
-            <p class="footer-text">
-                At SES, we bring artistry and innovation together to illuminate your spaces. With<br> smart lighting solutions tailored to your needs, we make your life brighter, smarter,<br> and more efficient.
-            </p>
-        </div>
-        <div class="footer-right">
-            <div class="newsletter">
-                <pre>
-
-
-                </pre>
-                <h3>Get Notified Our Newsletter</h3>
-                <p>Email</p>
-                <div class="newsletter-form">
-                    <input type="email" placeholder="Email">
-                    <button class="subscribe-btn">Subscribe</button>
-                   
-              
-                </div>
-                <p>Enter your email address</p>
-            </div>
-        </div>
-    </div>
-    <p class="footer-ses">Sustain Energy Solution</p>
-</footer>
-
-
-
-<script>// Pilih semua elemen dengan kelas .cta-button dan .cta-button-r
-const ctaButtons = document.querySelectorAll('.cta-button, .cta-button-r');
-
-// Loop melalui semua tombol dan tambahkan event listener
-ctaButtons.forEach(function(button) {
-    button.addEventListener('click', function() {
+    // Loop melalui semua tombol dan tambahkan event listener
+    ctaButtons.forEach(function (button) {
+      button.addEventListener('click', function () {
         // Ganti nilai isLoggedIn dengan status login yang sesuai
         const isLoggedIn = false; // Contoh: ganti dengan logika status login yang sebenarnya
 
         if (!isLoggedIn) {
-            window.location.href = 'php/Login1.php'; // Redirect ke halaman login jika belum login
+          window.location.href = 'Login1.php'; // Redirect ke halaman login jika belum login
         } else {
-            // Tindakan yang akan dilakukan jika sudah login
-            alert('Proceeding to book a consultation...');
+          // Tindakan yang akan dilakukan jika sudah login
+          alert('Proceeding to book a consultation...');
         }
-    });
-});
-
-
-
-
-  document.addEventListener("DOMContentLoaded", function() {
-    const categoryTags = document.querySelectorAll('.category-tag');
-
-    categoryTags.forEach(tag => {
-      tag.addEventListener('click', function() {
-        // Remove the active class from all category tags
-        categoryTags.forEach(t => t.classList.remove('active'));
-        
-        // Add the active class to the clicked category tag
-        this.classList.add('active');
       });
     });
-  });
 
-
-
-
-</script>
-
+  </script>
 </body>
-
 </html>
+
+<?php include('includes/footer.php'); ?>
