@@ -1,10 +1,13 @@
+<?php include('includes/navbar.php'); ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Smart Lighting Solutions</title>
-    <link rel="stylesheet" href="../css/explore.css" />
+    <link rel="stylesheet" href="assets/css/explore.css" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -13,20 +16,6 @@
   </head>
   <body>
 
-
-  <header>
-    <nav class="navbar">
-        <div class="logo">
-            <img src="../Image/logo hitam.svg"" alt="Smart Lighting Solutions Logo">
-        </div>
-        <div class="nav-links">
-             <a href="../index.php">Home</a> <!-- akan tetap disini -->
-            <a href="#">Explore</a> <!-- menuju explore.php -->
-            <a href="../php/blog.php">Blog</a> <!-- menuju blog.php -->
-        </div>
-        <button class="cta-button">Book a Consultation</button>
-    </nav>
-</header>
 
 
     <main>
@@ -132,41 +121,7 @@
 
 
 
-  <!-- Frame 78 - Footer -->
-  <footer>
-    <div class="footer-content">
-        <div class="footer-left">
-            <pre>
-
-
-
-            </pre>
-            <p class="footer-text">
-                At SES, we bring artistry and innovation together to illuminate your spaces. With<br> smart lighting solutions tailored to your needs, we make your life brighter, smarter,<br> and more efficient.
-            </p>
-        </div>
-        <div class="footer-right">
-            <div class="newsletter">
-                <pre>
-
-
-                </pre>
-                <h3>Get Notified Our Newsletter</h3>
-                <p>Email</p>
-                <div class="newsletter-form">
-                    <input type="email" placeholder="Email">
-                    <button class="subscribe-btn">Subscribe</button>
-                   
-              
-                </div>
-                <p>Enter your email address</p>
-            </div>
-        </div>
-    </div>
-    <p class="footer-ses">Sustain Energy Solution</p>
-</footer>
-
-
+    
 <script>
 // Pilih semua elemen dengan kelas .cta-button
 const ctaButtons = document.querySelectorAll('.cta-button');
@@ -190,4 +145,9 @@ ctaButtons.forEach(function(button) {
 
 </body>
 
+
+
 </html>
+
+
+<?php include('includes/footer.php') ?>
