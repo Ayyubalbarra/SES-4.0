@@ -123,7 +123,7 @@ if ($result && $result->num_rows > 0) {
         button.addEventListener('click', () => {
             const isLoggedIn = false; // Ganti dengan logika yang benar
             if (!isLoggedIn) {
-                window.location.href = 'Login1.php';
+                window.location.href = '../php/Login1.php';
             } else {
                 alert('Proceeding to book a consultation...');
             }
