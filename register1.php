@@ -94,15 +94,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <!-- Navbar -->
     <nav class="navbar">
-        <div class="logo">
-            <img src="assets/image/logo putih.svg" alt="Logo"> <!-- Change path/logo as needed -->
-        </div>
-        <ul class="nav-links">
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Explore</a></li>
-            <li><a href="#">Blog</a></li>
-        </ul>
-    </nav>
+    <div class="logo">
+        <a href="index.php"> <!-- Tambahkan URL yang diinginkan -->
+            <img src="assets/image/logo putih.svg" alt="Logo">
+        </a>
+    </div>
+</nav>
 
     <!-- Registration Form -->
     <div class="container">
