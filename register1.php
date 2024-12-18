@@ -95,7 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <!-- Navbar -->
     <nav class="navbar">
         <div class="logo">
-            <img src="../assets/imageLogin/Frame 2.svg" alt="Logo"> <!-- Change path/logo as needed -->
+            <img src="assets/image/logo putih.svg" alt="Logo"> <!-- Change path/logo as needed -->
         </div>
         <ul class="nav-links">
             <li><a href="#">Home</a></li>

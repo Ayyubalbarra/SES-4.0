@@ -135,7 +135,7 @@ ctaButtons.forEach(function(button) {
         const isLoggedIn = false; // Contoh: ganti dengan logika status login yang sebenarnya
 
         if (!isLoggedIn) {
-            window.location.href = '../php/Login1.php'; // Redirect ke halaman login jika belum login
+            window.location.href = 'Login1.php'; // Redirect ke halaman login jika belum login
         } else {
             // Tindakan yang akan dilakukan jika sudah login
             alert('Proceeding to book a consultation...');

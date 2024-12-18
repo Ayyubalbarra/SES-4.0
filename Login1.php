@@ -5,7 +5,7 @@ session_start();
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
 // Include the database connection
-include('assets/includes/db.php');
+include('includes/db.php');
 
 // Check database connection
 if (!$conn) {
@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $_SESSION['user_id'] = $user['id_user'];
                 $_SESSION['user_name'] = $user['name'];
                 $_SESSION['user_email'] = $user['email'];
-                header("Location: ../dashboard.php");
+                header("Location: dashboard.php");
                 exit();
             } else {
                 // Password is incorrect
@@ -67,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <!-- Navbar -->
     <nav class="navbar">
         <div class="logo">
-            <img src="../assets/image/Frame 2.svg" alt="Logo">
+            <img src="assets/image/logo putih.svg" alt="Logo">
         </div>
         <ul class="nav-links">
             <li><a href="#">Home</a></li>
