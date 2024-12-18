@@ -24,6 +24,9 @@ if (isset($_SESSION['user_id'])) {
   <title>Sustainable Lighting</title>
   <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
+    </style>
   <script src="assets/js/script.js" defer></script>
 
 
@@ -540,43 +543,6 @@ if (isset($_SESSION['user_id'])) {
 
 </pre>
 
-
-  <!-- Frame 78 - Footer -->
-  <footer>
-    <div class="footer-content">
-        <div class="footer-left">
-            <pre>
-
-
-
-            </pre>
-            <p class="footer-text">
-                At SES, we bring artistry and innovation together to illuminate your spaces. With<br> smart lighting solutions tailored to your needs, we make your life brighter, smarter,<br> and more efficient.
-            </p>
-        </div>
-        <div class="footer-right">
-            <div class="newsletter">
-                <pre>
-
-
-                </pre>
-                <h3>Get Notified Our Newsletter</h3>
-                <p>Email</p>
-                <div class="newsletter-form">
-                    <input type="email" placeholder="Email">
-                    <button class="subscribe-btn">Subscribe</button>
-                   
-              
-                </div>
-                <p>Enter your email address</p>
-            </div>
-        </div>
-    </div>
-    <p class="footer-ses">Sustain Energy Solution</p>
-</footer>
-
-
-
 <script>// Pilih semua elemen dengan kelas .cta-button dan .cta-button-r
 const ctaButtons = document.querySelectorAll('.cta-button, .cta-button-r');
 
@@ -620,3 +586,5 @@ ctaButtons.forEach(function(button) {
 </body>
 
 </html>
+
+<?php include('includes/footer.php'); ?>

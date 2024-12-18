@@ -1303,7 +1303,7 @@ header {
 footer {
   margin-top: 200px;
 
-  background: url("Image/FooterBackground.svg");
+  background: url("../SES-4.0/assets/image/FooterBackground.svg");
   background-size: cover;
   color: white;
   padding: 7px 0;
@@ -1373,7 +1373,7 @@ footer {
 }
 
 .footer-ses {
-  font-size: 120px;
+  font-size: 105px;
   font-family: "Plus Jakarta Sans", sans-serif;
   font-weight: 1000;
   text-align: center;

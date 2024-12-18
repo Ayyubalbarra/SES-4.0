@@ -1,12 +1,12 @@
 <?php
 session_start();
 if (!isset($_SESSION['admin'])) {
-    header("Location: ../php/blog.php");
+    header("Location: blog.php");
     exit;
 }
 
 // Menghubungkan ke database
-include('../php/db.php');
+include('assets/includes/db.php');
 
 // Ambil data blog dari database
 $sql = "SELECT * FROM blogs ORDER BY created_at DESC LIMIT 5"; // Mengambil 5 blog terbaru
