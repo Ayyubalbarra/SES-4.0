@@ -21,6 +21,7 @@ if ($result->num_rows > 0) {
     $message = "Tidak ada blog yang ditemukan.";
 }
 ?>
+<?php include('includes/navbar.php') ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -33,20 +34,6 @@ if ($result->num_rows > 0) {
     <script src="ses.js" defer></script>
 </head>
 <body>
-    <header>
-        <nav class="navbar">
-            <div class="logo">
-                <img src="../Image/logo hitam.svg" alt="Smart Lighting Solutions Logo">
-            </div>
-            <div class="nav-links">
-                <a href="../index.php">Home</a>
-                <a href="../php/explore.php">Explore</a>
-                <a href="#">Blog</a>
-            </div>
-            <button class="cta-button">Book a Consultation</button>
-        </nav>
-    </header>
-
     <div class="container">
         <div class="header">Lighting the Space, Smart Tips & Trends</div>
 
@@ -109,28 +96,6 @@ if ($result->num_rows > 0) {
             <?php endforeach; ?>
         </div>
     </div>
-
-    <footer>
-        <div class="footer-content">
-            <div class="footer-left">
-                <p class="footer-text">
-                    At SES, we bring artistry and innovation together to illuminate your spaces. With<br> smart lighting solutions tailored to your needs, we make your life brighter, smarter,<br> and more efficient.
-                </p>
-            </div>
-            <div class="footer-right">
-                <h3>Get Notified Our Newsletter</h3>
-                <div class="newsletter-form">
-                    <input type="email" placeholder="Email">
-                    <button class="subscribe-btn">Subscribe</button>
-                </div>
-            </div>
-        </div>
-        <p class="footer-ses">Sustain Energy Solution</p>
-    </footer>
-
-
-
-
 <script>
 // Pilih semua elemen dengan kelas .cta-button
 const ctaButtons = document.querySelectorAll('.cta-button');
@@ -154,3 +119,4 @@ ctaButtons.forEach(function(button) {
 
 </body>
 </html> 
+<?php include('includes/footer.php') ?>
