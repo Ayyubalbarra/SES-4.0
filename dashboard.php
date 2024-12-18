@@ -1,21 +1,16 @@
 <?php
-session_start(); // Memulai sesi
+session_start(); // Start session
 
-// Debugging: Menampilkan session ID untuk memastikan sesi aktif
-echo "Session ID: " . session_id() . "<br>";
-
-// Periksa apakah sesi ada
+// Session check
 if (!isset($_SESSION['user_id'])) {
-    // Jika sesi tidak ada, arahkan ke halaman login
-    echo "Tidak ada sesi pengguna. Mengalihkan ke halaman login...";
     header("Location: login1.php");
     exit();
 }
 
-// Ambil data pengguna dari sesi
+// Fetch user data from session
 $userName = $_SESSION['user_name'];
-$userEmail = $_SESSION['user_email'];
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -23,23 +18,28 @@ $userEmail = $_SESSION['user_email'];
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
-    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="assets/css/dashboard.css">
 </head>
 <body>
-    <nav>
-        <div class="logo">git config --global user.name
-            <img src="imageLogin/Frame 2.svg" alt="Logo">
+   
+<nav class="navbar">
+        <div class="logo">
+            <img src="assets/image/logo hitam.svg" alt="Logo"> <!-- Change path/logo as needed -->
         </div>
-        <ul>
-            <li><a href="explore.php">explore</a></li>
-            <li><a href="settings.php">Settings</a></li>
-            <li><a href="logout.php">Logout</a></li>
+        <ul class="nav-links">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Explore</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="logout.php">Logout</a></li> <!-- Tambahkan link logout -->
         </ul>
     </nav>
 
     <div class="container">
-        <h1>Welcome, <?php echo htmlspecialchars($userName); ?>!</h1>
-        <p>Email: <?php echo htmlspecialchars($userEmail); ?></p>
+    <h1 class="a">Tell us your story,</h1>
+    <h1 class="b">and get your advice soon</p>
     </div>
 </body>
 </html>
+
+
+<?php include('includes/footer.php'); ?>
