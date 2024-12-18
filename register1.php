@@ -81,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Register</title>
-    <link rel="stylesheet" href="../css/register1.css" />
+    <link rel="stylesheet" href="assets/css/register1.css" />
     <script>
         window.onload = function() {
             <?php if ($message): ?>
@@ -95,7 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <!-- Navbar -->
     <nav class="navbar">
         <div class="logo">
-            <img src="../imageLogin/Frame 2.svg" alt="Logo"> <!-- Change path/logo as needed -->
+            <img src="../assets/imageLogin/Frame 2.svg" alt="Logo"> <!-- Change path/logo as needed -->
         </div>
         <ul class="nav-links">
             <li><a href="#">Home</a></li>
@@ -127,7 +127,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </form>
 
             <div class="login">
-                <p>Already have an account? <a href="../php/login1.php">Login here</a></p>
+                <p>Already have an account? <a href="login1.php">Login here</a></p>
             </div>
         </div>
     </div>

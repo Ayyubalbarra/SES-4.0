@@ -5,7 +5,7 @@ session_start();
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
 // Include the database connection
-include('../php/db.php');
+include('includes/db.php');
 
 // Check database connection
 if (!$conn) {
@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $_SESSION['user_id'] = $user['id_user'];
                 $_SESSION['user_name'] = $user['name'];
                 $_SESSION['user_email'] = $user['email'];
-                header("Location: ../php/dashboard.php");
+                header("Location: ../dashboard.php");
                 exit();
             } else {
                 // Password is incorrect
@@ -56,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="../css/login1.css"> <!-- Link to your CSS file -->
+    <link rel="stylesheet" href="assets/css/login1.css"> <!-- Link to your CSS file -->
     <script>
         <?php if ($error_message): ?>
             alert('<?php echo $error_message; ?>');
@@ -67,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <!-- Navbar -->
     <nav class="navbar">
         <div class="logo">
-            <img src="../imageLogin/Frame 2.svg" alt="Logo">
+            <img src="../assets/image/Frame 2.svg" alt="Logo">
         </div>
         <ul class="nav-links">
             <li><a href="#">Home</a></li>
@@ -85,16 +85,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
         <div class="right">
             <!-- Standard Login Form -->
-            <form method="POST" action="../php/Login1.php">
+            <form method="POST" action="Login1.php">
                 <input type="email" name="email" required placeholder="Email">
                 <input type="password" name="password" required placeholder="Password">
                 <button type="submit">Login</button>
             </form>
 
             <!-- Register Button -->
-            <button class="register-btn" onclick="window.location.href='../php/Register1.php'">Create Account</button>
+            <button class="register-btn" onclick="window.location.href='Register1.php'">Create Account</button>
             <div class="login">
-                <p>Forgot password? <a href=".,/php/Register1.php">Reset here</a></p>
+                <p>Forgot password? <a href="register1.php">Reset here</a></p>
             </div>
         </div>
     </div>
