@@ -82,7 +82,7 @@ body {
 
 /* Saat dihover, gambar akan berubah */
 .overlay .lampuImage:hover {
-  content: url("assets/Image/menyala.svg"); /* Ganti dengan gambar baru */
+  content: url("assets/image/menyala.svg"); /* Ganti dengan gambar baru */
   transform: scale(1.1); /* Membesarkan dan memutar elemen */
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Menambahkan bayangan saat hover */
 }
