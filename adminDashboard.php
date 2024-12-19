@@ -22,10 +22,9 @@ if (!isset($_SESSION['admin'])) {
             <h3>Admin Dashboard</h3>
         </div>
         <ul class="sidebar-menu">
-            <li><a href="#">Beranda</a></li>
-            <li><a href="#">Pengguna</a></li>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">User consultation</a></li>
             <li><a href="uploadBlog.php">Upload blog</a></li>
-            <li><a href="#">Pengaturan</a></li>
             <li><a href="logout.php">Logout</a></li>
         </ul>
     </div>
