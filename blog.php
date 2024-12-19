@@ -4,7 +4,7 @@ include 'includes/db.php';
 include('includes/navbar.php');
 
 // Query untuk mengambil data blog dari database
-$sql = "SELECT id, title, content, category, author, created_at, image, visible FROM blogs ORDER BY created_at DESC";
+$sql = "SELECT id, title, content, category, author, created_at, image, visible FROM blogs ORDER BY created_at DESC"; 
 $result = $conn->query($sql);
 ?>
 
@@ -17,7 +17,7 @@ $result = $conn->query($sql);
     <title>Smart Lighting Solutions</title>
     <link rel="stylesheet" href="assets/css/blogs.css" />
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
     </style>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -52,24 +52,6 @@ $result = $conn->query($sql);
                 echo '<p>No blogs available.</p>';
             }
             ?>
-        </div>
-
-        <!-- Side Posts -->
-        <div class="side-posts">
-            <?php foreach ($blogs as $blog): ?>
-                <?php 
-                    $image = $blog['image'] 
-                        ? 'data:image/jpeg;base64,' . base64_encode($blog['image']) 
-                        : 'images/placeholder.jpg';
-                ?>
-                <div class="side-post">
-                    <img src="<?= $image ?>" alt="Blog Image" onerror="this.src='images/placeholder.jpg';">
-                    <div class="content">
-                        <h4><?= htmlspecialchars($blog['title']) ?></h4>
-                        <p><?= substr(htmlspecialchars($blog['content']), 0, 100) . '...' ?></p>
-                    </div>
-                </div>
-            <?php endforeach; ?>
         </div>
     </div>
 
