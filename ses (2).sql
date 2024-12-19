@@ -46,6 +46,8 @@ INSERT INTO `admin` (`admin_id`, `nama`, `email`, `password`) VALUES
 --
 -- Struktur dari tabel `blogs`
 --
+ALTER TABLE blogs ADD COLUMN visible TINYINT(1) NOT NULL DEFAULT 1;
+
 
 CREATE TABLE `blogs` (
   `id` int(11) NOT NULL,
