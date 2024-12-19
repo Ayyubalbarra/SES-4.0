@@ -42,14 +42,14 @@ if (isset($_SESSION['user_id'])) {
 
   <!-- Overlay dengan gambar lampu dan tulisan -->
   <div class="overlay" id="overlay">
-    <img src="assets/Image/Property 1 Default.svg" alt="Gambar Overlay" class="lampuImage" id="lampuImage">
+    <img src="assets/image/Property 1 Default.svg" alt="Gambar Overlay" class="lampuImage" id="lampuImage">
     
     <!-- Tambahkan tulisan di bawah gambar -->
     <p class="lampuText" id="lampuText">Turn your light up</p>
   </div>
 
   <!-- Gambar latar belakang yang akan diganti -->
-  <img src="assets/Image/Union.svg" alt="Gambar Latar" class="gambarBlank" id="gambarBlank">
+  <img src="assets/image/Union.svg" alt="Gambar Latar" class="gambarBlank" id="gambarBlank">
 </div>
 
 
@@ -64,7 +64,7 @@ if (isset($_SESSION['user_id'])) {
   <div class="statement-section">
     <div class="statement-header">
       <p class="statement-text">Light</p>
-      <img src="assets/Image/Hands Cradling Glowing Sphere 1.png" alt="Glowing Sphere" class="statement-image" />
+      <img src="assets/image/Hands Cradling Glowing Sphere 1.png" alt="Glowing Sphere" class="statement-image" />
       <p class="statement-text">is essential to </p>
     </div>
     <div class="statement-body">
@@ -94,7 +94,7 @@ if (isset($_SESSION['user_id'])) {
       </div>
       <div class="mission-highlight">
         <p class="mission-text">protecting</p>
-        <img src="assets/Image/View of Earth from Space 1.png" alt="Earth from Space" class="mission-image" />
+        <img src="assets/image/View of Earth from Space 1.png" alt="Earth from Space" class="mission-image" />
         <p class="mission-text">the planet.</p>
       </div>
     </div>
@@ -164,31 +164,31 @@ if (isset($_SESSION['user_id'])) {
     <div class="category-grid">
       <!-- Downlight -->
       <div class="category-card">
-        <img src="assets/Image/image 3.png" alt="Downlight" class="category-image">
+        <img src="assets/image/image 3.png" alt="Downlight" class="category-image">
         <p class="category-name">Downlight</p>
       </div>
 
       <!-- Downlight Accent -->
       <div class="category-card">
-        <img src="assets/Image/image 4.png" alt="Downlight Accent" class="category-image">
+        <img src="assets/image/image 4.png" alt="Downlight Accent" class="category-image">
         <p class="category-name">Downlight Accent</p>
       </div>
 
       <!-- Downlight -->
       <div class="category-card">
-        <img src="assets/Image/image 5.png" alt="Downlight" class="category-image">
+        <img src="assets/image/image 5.png" alt="Downlight" class="category-image">
         <p class="category-name">Downlight</p>
       </div>
 
       <!-- Batten -->
       <div class="category-card">
-        <img src="assets/Image/image 6.png" alt="Batten" class="category-image">
+        <img src="assets/image/image 6.png" alt="Batten" class="category-image">
         <p class="category-name">Batten</p>
       </div>
 
       <!-- Gridlight -->
       <div class="category-card">
-        <img src="assets/Image/image 7.png" alt="Gridlight" class="category-image">
+        <img src="assets/image/image 7.png" alt="Gridlight" class="category-image">
         <p class="category-name">Gridlight</p>
       </div>
     </div>
@@ -213,7 +213,7 @@ if (isset($_SESSION['user_id'])) {
       </p>
       <div class="browse">
         <p>
-          didn’t found what you need? <a href="#">Browse all product <img href="#" src="assets/Image/blackarrow.svg" alt="" /></a>
+          didn’t found what you need? <a href="#">Browse all product <img href="#" src="assets/image/blackarrow.svg" alt="" /></a>
         </p>
       </div>
       
@@ -245,7 +245,7 @@ if (isset($_SESSION['user_id'])) {
           <p>With Four Simple Step</p>
         </div>
       </div>
-      <img src="assets/Image/Hand-held Beacon of Inspiration Against Sunset 1.png" alt="rectangle" width="367" height="390"
+      <img src="assets/image/Hand-held Beacon of Inspiration Against Sunset 1.png" alt="rectangle" width="367" height="390"
         class="steps-image" />
     </div>
     <div class="steps-right">
@@ -399,7 +399,7 @@ if (isset($_SESSION['user_id'])) {
   <!-- Frame 57 - Testimonial -->
   <section class="testimonial">
     <div class="testimonial-container">
-      <img src="assets/Image/Futuristic Mesh-Lit Lounge 1.png" alt="Modern Workspace" class="testimonial-image">
+      <img src="assets/image/Futuristic Mesh-Lit Lounge 1.png" alt="Modern Workspace" class="testimonial-image">
 
       <div class="testimonial-content">
         <h2 class="testimonial-title">A better future starts from your workspace</h2>
@@ -407,10 +407,10 @@ if (isset($_SESSION['user_id'])) {
         <div class="testimonial-box">
           <h3 class="testimonial-subtitle">Who have get their light with us</h3>
           <div class="testimonial-quote">
-            <img src="assets/Image/left quote.svg" alt="Quote" class="quote-icon">
+            <img src="assets/image/left quote.svg" alt="Quote" class="quote-icon">
             <p>"I love how effortlessly I can control my lights from my phone. It's not just efficient but also adds a
               touch of modern elegance to my space."</p>
-            <img src="assets/Image/right quote.svg" alt="Quote" class="quote-icon">
+            <img src="assets/image/right quote.svg" alt="Quote" class="quote-icon">
           </div>
         </div>
       </div>
