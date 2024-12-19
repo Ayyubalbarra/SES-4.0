@@ -34,6 +34,13 @@ $result_finished = $conn->query($sql_finished);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <link rel="stylesheet" href="assets/css/dashboard.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+    
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
+</style>
 </head>
 <body>
 
@@ -42,23 +49,30 @@ $result_finished = $conn->query($sql_finished);
 <h1>Welcome, <?php echo htmlspecialchars($user_name); ?></h1>
 
 <a href="form.php" class="button">+ Book a Consultation</a>
-
 <div class="container">
-    <div class="card">
-        <h2>Running Consultation</h2>
-        <?php if ($result_running->num_rows > 0): ?>
-            <ul>
-                <?php while($row = $result_running->fetch_assoc()): ?>
-                    <li><a href="details.php?id=<?php echo $row['id']; ?>"><?php echo $row['company_name']; ?> - <?php echo $row['company_field']; ?> </a></li>
-                <?php endwhile; ?>
-            </ul>
-        <?php else: ?>
-            <p>You don't have any running consultation yet.</p>
-        <?php endif; ?>
-    </div>
+<div class="card">
+    <h2>Running Consultation</h2>
+    <hr />
+    <?php if ($result_running->num_rows > 0): ?>
+        <ul>
+            <?php while($row = $result_running->fetch_assoc()): ?>
+                <li style="display: flex; justify-content: space-between; align-items: center;">
+                    <a href="details.php?id=<?php echo $row['id']; ?>">
+                        <?php echo $row['company_name']; ?> - <?php echo $row['company_field']; ?>
+                    </a>
+                    <span class="created-at"><?php echo date('d M Y', strtotime($row['created_at'])); ?></span>
+                </li>
+            <?php endwhile; ?>
+        </ul>
+    <?php else: ?>
+        <p>You don't have any running consultation yet.</p>
+    <?php endif; ?>
+</div>
+
 
     <div class="card">
         <h2>Finished Consultation</h2>
+        <hr />
         <?php if ($result_finished->num_rows > 0): ?>
             <ul>
                 <?php while($row = $result_finished->fetch_assoc()): ?>
@@ -77,7 +91,7 @@ $result_finished = $conn->query($sql_finished);
 
 </body>
 </html>
-<?php include('includes/tab.php'); ?>
+
 
 <?php
 $conn->close();
@@ -85,3 +99,6 @@ $conn->close();
 
 
 <p><a href="logout.php">logout</a></p>
+
+
+<?php include('includes/tab.php'); ?>

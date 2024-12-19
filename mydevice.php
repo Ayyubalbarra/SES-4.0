@@ -33,22 +33,12 @@ include('includes/db.php');
 <a href="form.php" class="button">+ Connect a device</a>
 
 <!-- Tab Section -->
-<div class="tab">
-    <button class="<?php echo (basename($_SERVER['PHP_SELF']) == 'dashboard.php') ? 'active' : ''; ?>" onclick="setActiveTab(event, 'consultationHistory')">Consultation History</button>
-    <button class="<?php echo (basename($_SERVER['PHP_SELF']) == 'dashboard.php') ? 'active' : ''; ?>" onclick="setActiveTab(event, 'myDevice')">My Device</button>
-    <button onclick="setActiveTab(event, 'profile')">Profile</button>
-</div>
 
 
 
-<p><a href="logout.php">Logout</a></p>
 
 </body>
 </html>
 
-<?php include('includes/tab.php'); ?>
-<?php
-$conn->close();
-?>
 
-<p><a href="logout.php">logout</a></p>
+<?php include('includes/tab.php'); ?>

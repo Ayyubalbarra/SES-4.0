@@ -4,8 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
+    <style>
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
+</style>
 
     <style>
+        
   
   /* General Reset */
 * {
@@ -74,7 +78,7 @@ body {
         <img src="assets/image/logo hitam.svg" alt="Logo"> <!-- Change path/logo as needed -->
     </div>
     <ul class="nav-links">
-        <li><a href="#">Home</a></li>
+        <li><a href="dashboard.php">Home</a></li>
         <li><a href="#">Explore</a></li>
         <li><a href="#">Blog</a></li>
      

@@ -17,29 +17,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $privacy_policy = isset($_POST['privacy-policy']) ? 1 : 0;
     $updates_promotions = isset($_POST['updates-promotions']) ? 1 : 0;
 
-    // Mengecek koneksi database
-    if ($conn) {
-        // Menyimpan data ke database
-        $sql = "INSERT INTO consultation_form (company_name, company_field, company_size, company_address, current_lighting, problem_detail, goals, min_budget, max_budget, privacy_policy, updates_promotions)
-                VALUES ('$company_name', '$company_field', '$company_size', '$company_address', '$current_lighting', '$problem_detail', '$goals', '$min_budget', '$max_budget', '$privacy_policy', '$updates_promotions')";
-
-        // Mengeksekusi query dan memeriksa apakah berhasil
-        if ($conn->query($sql) === TRUE) {
-            // Jika berhasil disimpan
-            echo "<p>Form berhasil disubmit! Terima kasih telah mengisi form.</p>";
-        } else {
-            // Jika terjadi kesalahan dalam eksekusi query
-            echo "<p>Error: " . $sql . "<br>" . $conn->error . "</p>";
-        }
-
-        // Menutup koneksi
-        $conn->close();
+    // Validasi checkbox
+    if (!$privacy_policy) {
+        echo "<script>alert('Please agree to the privacy policy before submitting the form.');</script>";
+    } elseif (!$updates_promotions) {
+        echo "<script>alert('Please agree to receive updates and promotions before submitting the form.');</script>";
     } else {
-        // Jika koneksi ke database gagal
-        echo "<p>Gagal menghubungkan ke database. Silakan coba lagi nanti.</p>";
+        // Mengecek koneksi database
+        if ($conn) {
+            // Menyimpan data ke database
+            $sql = "INSERT INTO consultation_form (company_name, company_field, company_size, company_address, current_lighting, problem_detail, goals, min_budget, max_budget, privacy_policy, updates_promotions)
+                    VALUES ('$company_name', '$company_field', '$company_size', '$company_address', '$current_lighting', '$problem_detail', '$goals', '$min_budget', '$max_budget', '$privacy_policy', '$updates_promotions')";
+
+            // Mengeksekusi query dan memeriksa apakah berhasil
+            if ($conn->query($sql) === TRUE) {
+                // Jika berhasil disimpan
+                echo "<script>alert('Form berhasil disubmit! Terima kasih telah mengisi form.');</script>";
+                echo "<script>window.location.href='form.php';</script>"; // Opsional: redirect ke halaman form
+            } else {
+                // Jika terjadi kesalahan dalam eksekusi query
+                echo "<script>alert('Error: " . $conn->error . "');</script>";
+            }
+
+            // Menutup koneksi
+            $conn->close();
+        } else {
+            // Jika koneksi ke database gagal
+            echo "<script>alert('Gagal menghubungkan ke database. Silakan coba lagi nanti.');</script>";
+        }
     }
 }
 ?>
+<?php include('includes/navbarDashboard.php'); ?>
 
 
 <!DOCTYPE html>
@@ -49,86 +58,97 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Company Consultation Form</title>
     <link rel="stylesheet" href="assets/css/form.css">
+    
 </head>
 <body>
 
-
-<?php include('includes/navbarDashboard.php'); ?>
-
-
-
-    <div class="form-container">
-        <h2>Company Detail</h2>
-        <form action="form.php" method="POST">
-            <!-- Company Details -->
-            <div class="form-group">
-                <label for="company-name">Company Name</label>
-                <input type="text" id="company-name" name="company-name" placeholder="e.g. SES" required>
-            </div>
-
-            <div class="form-group">
-                <label for="company-field">Company Field</label>
-                <input type="text" id="company-field" name="company-field" placeholder="e.g. Retail, Architectural, etc." required>
-            </div>
-
-            <div class="form-group">
-                <label for="company-size">Company Size</label>
-                <input type="number" id="company-size" name="company-size" placeholder="Number of Employees" required>
-            </div>
-
-            <div class="form-group">
-                <label for="company-address">Company Address</label>
-                <input type="text" id="company-address" name="company-address" placeholder="City and District of your company" required>
-            </div>
-
-            <!-- Consultation Details -->
-            <h2>Consultation Detail</h2>
-
-            <div class="form-group">
-                <label for="current-lighting">Current Lighting Setup</label>
-                <textarea id="current-lighting" name="current-lighting" placeholder="Type your message here"></textarea>
-            </div>
-
-            <div class="form-group">
-                <label for="problem-detail">Problem Detail</label>
-                <textarea id="problem-detail" name="problem-detail" placeholder="Type your message here"></textarea>
-            </div>
-
-            <div class="form-group">
-                <label for="goals">Goals</label>
-                <textarea id="goals" name="goals" placeholder="Type your message here"></textarea>
-            </div>
-
-            <div class="form-group">
-                <label>Budget Range</label>
-                <div class="budget-range">
-                    <input type="number" name="min-budget" placeholder="Min Rp">
-                    <input type="number" name="max-budget" placeholder="Max Rp">
-                </div>
-            </div>
-
-            <div class="form-group checkbox-group">
-                <input type="checkbox" id="privacy-policy" name="privacy-policy">
-                <label for="privacy-policy">I agree to the processing of my personal data in accordance with the privacy policy.</label>
-            </div>
-
-            <div class="form-group checkbox-group">
-                <input type="checkbox" id="updates-promotions" name="updates-promotions">
-                <label for="updates-promotions">I agree to receive updates, promotions, and other communications related to your products and services.</label>
-            </div>
-
-            <button type="submit" class="submit-btn">Save Form</button>
-
-            
-        </form>
-
-
-
+    <div class="wrapper">
+        <!-- Menambahkan kalimat di luar form dan memastikan posisinya di atas -->
+          <div class="form-description">
+        <h1>Tell us your story,</h1>
+        <h1>and get your advice soon</h1>
     </div>
-    
+
+        <div class="form-container">
+            <h2>Company Detail</h2>
+            <p>Tell us about your company</p>
+            
+            <form action="form.php" method="POST">
+                <!-- Company Details -->
+                <div class="form-group">
+                    <label for="company-name">Company Name</label>
+                    <input type="text" id="company-name" name="company-name" placeholder="e.g. SES" required>
+
+                </div>
+
+                <div class="form-group">
+                    <label for="company-field">Company Field</label>
+                    <input type="text" id="company-field" name="company-field" placeholder="e.g. Retail, Architectural, etc." required>
+                </div>
+
+                <div class="form-group">
+                    <label for="company-size">Company Size</label>
+                    <input type="number" id="company-size" name="company-size" placeholder="Number of Employees" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="company-address">Company Address</label>
+                    <input type="text" id="company-address" name="company-address" placeholder="City and District of your company" required>
+                </div>
+
+                <!-- Consultation Details -->
+                <h2>Consultation Detail</h2>
+
+                <div class="form-group">
+                    <label for="current-lighting">Current Lighting Setup</label>
+                    <textarea id="current-lighting" name="current-lighting" placeholder="Type your message here"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="problem-detail">Problem Detail</label>
+                    <textarea id="problem-detail" name="problem-detail" placeholder="Type your message here"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="goals">Goals</label>
+                    <textarea id="goals" name="goals" placeholder="Type your message here"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Budget Range</label>
+                    <div class="budget-range">
+                        <input type="number" name="min-budget" placeholder="Min Rp">
+                        <input type="number" name="max-budget" placeholder="Max Rp">
+                    </div>
+                </div>
+
+                <!-- Preferred Date Section -->
+                <div class="form-group">
+                    <label for="preferred-date">Preferred Date</label>
+                    <input type="date" id="preferred-date" name="preferred-date" placeholder="Choose Date">
+                </div>
+
+                <div class="form-group checkbox-group">
+                    <input type="checkbox" id="privacy-policy" name="privacy-policy">
+                    <label for="privacy-policy">I agree to the processing of my personal data in accordance with the privacy policy.</label>
+                </div>
+
+                <div class="form-group checkbox-group">
+                    <input type="checkbox" id="updates-promotions" name="updates-promotions">
+                    <label for="updates-promotions">I agree to receive updates, promotions, and other communications related to your products and services.</label>
+                </div>
+                <div class="actions">
+    <button type="reset" class="cancel-btn">Cancel</button>
+    <button type="submit" class="submit-btn">Save Form</button>
+</div>
+
+            </form>
+        </div>
+    </div>
+
+  
+  
 </body>
 
 
 </html>
-
-
