@@ -4,7 +4,7 @@ session_start(); // Memulai session
 // Cek apakah pengguna sudah login
 if (isset($_SESSION['user_id'])) {
     // Jika sudah login, alihkan ke halaman dashboard
-    header("Location: php/dashboard.php");
+    header("Location: dashboard.php");
     exit();
 }
 

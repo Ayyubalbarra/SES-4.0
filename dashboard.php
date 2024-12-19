@@ -1,5 +1,23 @@
+<?php
+// Menghubungkan file db.php
+include('includes/db.php');
 
-<?php include('includes/navbarDashboard.php'); ?>
+// Mengecek apakah user sudah login (misalnya, jika menggunakan sistem login)
+session_start();
+
+// Mengambil data form yang sudah disubmit dari database
+$sql = "SELECT * FROM consultation_form ORDER BY created_at DESC";
+$result = $conn->query($sql);
+
+// Menarik data konsultasi yang sedang berjalan (status 'running')
+$sql_running = "SELECT * FROM consultation_form WHERE status = 'running'";
+$result_running = $conn->query($sql_running);
+
+// Menarik data konsultasi yang sudah selesai (status 'finished')
+$sql_finished = "SELECT * FROM consultation_form WHERE status = 'finished'";
+$result_finished = $conn->query($sql_finished);
+
+?>
 
 <!DOCTYPE html>
 <html lang="id">
@@ -10,41 +28,49 @@
     <link rel="stylesheet" href="assets/css/dashboard.css">
 </head>
 <body>
-<pre>
 
+<?php include('includes/navbarDashboard.php'); ?>
 
+<h1>Welcome, Name</h1>
 
+<a href="form.php" class="button">+ Book a Consultation</a>
 
-
-</pre>
-<h1>Welcome Name</h1>
-
-
-    <a href="#" class="button">+ Book a Consultation</a>
-    <div class="container">
-        <div class="card">
-            <h2>Running Consultation</h2>
-            <p>You don't have any running consultation yet</p>
-        </div>
-        <div class="card">
-            <h2>Finished Consultation</h2>
-            <p>You don't have any finished consultation yet</p>
-        </div>
+<div class="container">
+    <div class="card">
+        <h2>Running Consultation</h2>
+        <?php if ($result_running->num_rows > 0): ?>
+            <ul>
+                <?php while($row = $result_running->fetch_assoc()): ?>
+                    <li><?php echo $row['company_name']; ?> - <?php echo $row['company_field']; ?> (Status: <?php echo $row['status']; ?>)</li>
+                <?php endwhile; ?>
+            </ul>
+        <?php else: ?>
+            <p>You don't have any running consultation yet.</p>
+        <?php endif; ?>
     </div>
-  
-<pre>
 
+    <div class="card">
+        <h2>Finished Consultation</h2>
+        <?php if ($result_finished->num_rows > 0): ?>
+            <ul>
+                <?php while($row = $result_finished->fetch_assoc()): ?>
+                    <li><?php echo $row['company_name']; ?> - <?php echo $row['company_field']; ?> (Status: <?php echo $row['status']; ?>)</li>
+                <?php endwhile; ?>
+            </ul>
+        <?php else: ?>
+            <p>You don't have any finished consultation yet.</p>
+        <?php endif; ?>
+    </div>
+</div>
 
-
-
-
-
-
-</pre>
 <?php include('includes/tab.php'); ?>
 
-            <p><a href="logout.php">logout</a></p>
+<p><a href="logout.php">Logout</a></p>
 
 </body>
 </html>
+
+<?php
+$conn->close();
+?>
 

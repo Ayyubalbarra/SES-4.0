@@ -1,121 +1,84 @@
+<?php
+// Menghubungkan file db.php
+include('includes/db.php');
+
+// Mengecek apakah form telah disubmit
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Mendapatkan data dari form
+    $company_name = $_POST['company-name'];
+    $company_field = $_POST['company-field'];
+    $company_size = $_POST['company-size'];
+    $company_address = $_POST['company-address'];
+    $current_lighting = $_POST['current-lighting'];
+    $problem_detail = $_POST['problem-detail'];
+    $goals = $_POST['goals'];
+    $min_budget = $_POST['min-budget'];
+    $max_budget = $_POST['max-budget'];
+    $privacy_policy = isset($_POST['privacy-policy']) ? 1 : 0;
+    $updates_promotions = isset($_POST['updates-promotions']) ? 1 : 0;
+
+    // Mengecek koneksi database
+    if ($conn) {
+        // Menyimpan data ke database
+        $sql = "INSERT INTO consultation_form (company_name, company_field, company_size, company_address, current_lighting, problem_detail, goals, min_budget, max_budget, privacy_policy, updates_promotions)
+                VALUES ('$company_name', '$company_field', '$company_size', '$company_address', '$current_lighting', '$problem_detail', '$goals', '$min_budget', '$max_budget', '$privacy_policy', '$updates_promotions')";
+
+        // Mengeksekusi query dan memeriksa apakah berhasil
+        if ($conn->query($sql) === TRUE) {
+            // Jika berhasil disimpan
+            echo "<p>Form berhasil disubmit! Terima kasih telah mengisi form.</p>";
+        } else {
+            // Jika terjadi kesalahan dalam eksekusi query
+            echo "<p>Error: " . $sql . "<br>" . $conn->error . "</p>";
+        }
+
+        // Menutup koneksi
+        $conn->close();
+    } else {
+        // Jika koneksi ke database gagal
+        echo "<p>Gagal menghubungkan ke database. Silakan coba lagi nanti.</p>";
+    }
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Company Consultation Form</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f9f9f9;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            height: 100vh;
-            overflow-y: auto;
-        }
-
-        .form-container {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 400px;
-            margin-top: 20px;
-        }
-
-        .form-container h2 {
-            margin-bottom: 20px;
-            font-size: 20px;
-            color: #333;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-size: 14px;
-            color: #555;
-        }
-
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 14px;
-        }
-
-        .form-group textarea {
-            resize: none;
-            height: 80px;
-        }
-
-        .form-group .budget-range {
-            display: flex;
-            gap: 10px;
-        }
-
-        .form-group .budget-range input {
-            width: 48%;
-        }
-
-        .form-group .checkbox-group {
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-        }
-
-        .form-group .checkbox-group input {
-            width: auto;
-            margin-top: 4px;
-        }
-
-        .submit-btn {
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            padding: 10px 15px;
-            font-size: 16px;
-            border-radius: 4px;
-            cursor: pointer;
-            width: 100%;
-        }
-
-        .submit-btn:hover {
-            background-color: #0056b3;
-        }
-    </style>
+    <link rel="stylesheet" href="assets/css/form.css">
 </head>
 <body>
+
+
+<?php include('includes/navbarDashboard.php'); ?>
+
+
+
     <div class="form-container">
         <h2>Company Detail</h2>
-        <form>
+        <form action="form.php" method="POST">
             <!-- Company Details -->
             <div class="form-group">
                 <label for="company-name">Company Name</label>
-                <input type="text" id="company-name" name="company-name" placeholder="e.g. SES">
+                <input type="text" id="company-name" name="company-name" placeholder="e.g. SES" required>
             </div>
 
             <div class="form-group">
                 <label for="company-field">Company Field</label>
-                <input type="text" id="company-field" name="company-field" placeholder="e.g. Retail, Architectural, etc.">
+                <input type="text" id="company-field" name="company-field" placeholder="e.g. Retail, Architectural, etc." required>
             </div>
 
             <div class="form-group">
                 <label for="company-size">Company Size</label>
-                <input type="text" id="company-size" name="company-size" placeholder="Number of Employees">
+                <input type="number" id="company-size" name="company-size" placeholder="Number of Employees" required>
             </div>
 
             <div class="form-group">
                 <label for="company-address">Company Address</label>
-                <input type="text" id="company-address" name="company-address" placeholder="City and District of your company">
+                <input type="text" id="company-address" name="company-address" placeholder="City and District of your company" required>
             </div>
 
             <!-- Consultation Details -->
@@ -155,7 +118,17 @@
             </div>
 
             <button type="submit" class="submit-btn">Save Form</button>
+
+            
         </form>
+
+
+
     </div>
+    
 </body>
+
+
 </html>
+
+
