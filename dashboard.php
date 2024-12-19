@@ -36,18 +36,24 @@ $result_finished = $conn->query($sql_finished);
 <a href="form.php" class="button">+ Book a Consultation</a>
 
 <div class="container">
-    <div class="card">
-        <h2>Running Consultation</h2>
-        <?php if ($result_running->num_rows > 0): ?>
-            <ul>
-                <?php while($row = $result_running->fetch_assoc()): ?>
-                    <li><?php echo $row['company_name']; ?> - <?php echo $row['company_field']; ?> (Status: <?php echo $row['status']; ?>)</li>
-                <?php endwhile; ?>
-            </ul>
-        <?php else: ?>
-            <p>You don't have any running consultation yet.</p>
-        <?php endif; ?>
-    </div>
+
+<div class="card">
+    <h2>Running Consultation</h2>
+    <?php if ($result_running->num_rows > 0): ?>
+        <ul>
+            <?php while($row = $result_running->fetch_assoc()): ?>
+                <li>
+                    <a href="details.php?id=<?php echo $row['id']; ?>">
+                        <?php echo $row['company_name']; ?> - <?php echo $row['company_field']; ?> (Status: <?php echo $row['status']; ?>)
+                    </a>
+                </li>
+            <?php endwhile; ?>
+        </ul>
+    <?php else: ?>
+        <p>You don't have any running consultation yet.</p>
+    <?php endif; ?>
+</div>
+
 
     <div class="card">
         <h2>Finished Consultation</h2>

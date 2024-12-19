@@ -3,12 +3,12 @@ session_start();
 
 // Cek jika user sudah login
 if (isset($_SESSION['admin'])) {
-    header("Location: ../php/adminDashboard.php");
+    header("Location: adminDashboard.php");
     exit;
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    include('../php/db.php'); // Pastikan ini mengarah ke koneksi database yang benar
+    include('includes/db.php'); // Pastikan ini mengarah ke koneksi database yang benar
 
     // Ambil data dari form
     $username = $_POST['username'];
@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($result->num_rows > 0) {
         // Set session untuk admin
         $_SESSION['admin'] = $username;
-        header("Location: ../php/adminDashboard.php");
+        header("Location: adminDashboard.php");
         exit;
     } else {
         // Jika login gagal
@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Admin</title>
-    <link rel="stylesheet" href="../css/adminLogin.css">
+    <link rel="stylesheet" href="assets/css/adminLogin.css">
 </head>
 <body>
     <div class="login-container">

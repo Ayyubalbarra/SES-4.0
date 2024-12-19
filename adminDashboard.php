@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['admin'])) {
-    header("Location: ../php/admindashboard.php");
+    header("Location: adminDashboard.php");
     exit;
 }
 ?>
@@ -12,7 +12,7 @@ if (!isset($_SESSION['admin'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Admin</title>
-    <link rel="stylesheet" href="../css/adminDashboard.css">
+    <link rel="stylesheet" href="assets/css/adminDashboard.css">
     <!-- Menggunakan Google Font untuk tampilan lebih menarik -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
@@ -24,9 +24,9 @@ if (!isset($_SESSION['admin'])) {
         <ul class="sidebar-menu">
             <li><a href="#">Beranda</a></li>
             <li><a href="#">Pengguna</a></li>
-            <li><a href="../php/uploadBlog.php">Upload blog</a></li>
+            <li><a href="uploadBlog.php">Upload blog</a></li>
             <li><a href="#">Pengaturan</a></li>
-            <li><a href="../php/logout.php">Logout</a></li>
+            <li><a href="logout.php">Logout</a></li>
         </ul>
     </div>
 

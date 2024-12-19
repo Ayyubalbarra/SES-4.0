@@ -1,12 +1,12 @@
 <?php
 session_start();
 if (!isset($_SESSION['admin'])) {
-    header("Location: ../php/login.php");
+    header("Location: adminlogin.php");
     exit;
 }
 
 // Menghubungkan ke database
-include('../php/db.php');
+include('db.php');
 
 // Variabel untuk menampung pesan error atau sukses
 $message = '';
@@ -70,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Upload Blog - Admin Dashboard</title>
-    <link rel="stylesheet" href="../css/adminDashboard.css">
+    <link rel="stylesheet" href="assets/css/adminDashboard.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
