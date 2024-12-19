@@ -4,10 +4,10 @@ session_start();
 // Check if the user is already logged in
 if (isset($_SESSION['user_id'])) {
     // If user is logged in, redirect them to the dashboard
-    header("Location: ../php/dashboard.php");
+    header("Location: dashboard.php");
     exit(); // Ensure no further code is executed
 }
-include('../php/db.php'); // Include the database connection
+include('includes/db.php'); // Include the database connection
 
 // Message for success or error
 $message = "";
@@ -61,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if ($stmt->execute()) {
             // Success message, redirect to login
             $message = "Registration successful! You can now login.";
-            header("Location: ../php/Login1.php?message=" . urlencode($message));
+            header("Location: Login1.php?message=" . urlencode($message));
             exit(); // Ensure no further code is executed after redirection
         } else {
             // Log error if query execution fails
@@ -109,7 +109,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <p>Join us to transform your lighting experience with intelligent control and seamless integration.</p>
         </div>
         <div class="right">
-            <form method="POST" action="../php/register1.php">
+            <form method="POST" action="register1.php">
                 <div class="name-container">
                     <input type="text" name="name" placeholder="First Name" required />
                     <input type="text" name="last_name" placeholder="Last Name" required />
