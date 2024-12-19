@@ -6,7 +6,7 @@ if (!isset($_SESSION['admin'])) {
 }
 
 // Menghubungkan ke database
-include('db.php');
+include('includes/db.php');
 
 // Variabel untuk menampung pesan error atau sukses
 $message = '';
