@@ -1,67 +1,83 @@
 <?php
 session_start();
+include 'includes/db.php';
+
+// Pastikan admin telah login
 if (!isset($_SESSION['admin'])) {
-    header("Location: adminlogin.php");
-    exit;
+    die("Access denied. Please log in as admin.");
 }
 
-// Menghubungkan ke database
-include('includes/db.php');
+// Ambil nama admin yang login
+$author = $_SESSION['admin'];
 
-// Variabel untuk menampung pesan error atau sukses
-$message = '';
+// Handler untuk permintaan POST
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['action'])) {
+        // Tambah Blog
+        if ($_POST['action'] === 'add') {
+            $title = $_POST['title'];
+            $content = $_POST['content'];
+            $category = $_POST['category'];
+            $image = $_FILES['image']['tmp_name']; // File gambar
 
-// Proses pengunggahan blog
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Ambil data dari form
-    $title = $_POST['title'];
-    $content = $_POST['content'];
-    $category = $_POST['category'];
-    $author = $_SESSION['admin'];  // Admin yang login
+            // Simpan file gambar
+            $imageData = file_get_contents($image);
 
-    // Validasi form input
-    if (empty($title) || empty($content) || empty($category)) {
-        $message = "Semua kolom harus diisi!";
-    } else {
-        // Proses upload gambar
-        $image = $_FILES['image'];
-        $image_name = $image['name'];
-        $image_tmp_name = $image['tmp_name'];
-        $image_size = $image['size'];
-        $image_error = $image['error'];
+            // Ambil nilai display_order terbesar
+            $result = $conn->query("SELECT MAX(display_order) AS max_order FROM blogs");
+            $row = $result->fetch_assoc();
+            $newDisplayOrder = $row['max_order'] + 1;
 
-        // Validasi apakah ada gambar yang diupload
-        if ($image_name) {
-            // Cek tipe file gambar
-            $allowed_extensions = ['jpg', 'jpeg', 'png', 'gif'];
-            $image_extension = strtolower(pathinfo($image_name, PATHINFO_EXTENSION));
-
-            if (!in_array($image_extension, $allowed_extensions)) {
-                $message = "Format gambar tidak valid! Hanya JPG, JPEG, PNG, atau GIF yang diizinkan.";
-            } elseif ($image_size > 5000000) { // Ukuran maksimal 5MB
-                $message = "Ukuran gambar terlalu besar! Maksimal 5MB.";
+            // Tambahkan blog baru
+            $stmt = $conn->prepare("INSERT INTO blogs (title, content, category, image, visible, display_order, author) 
+                                    VALUES (?, ?, ?, ?, 1, ?, ?)");
+            $stmt->bind_param("ssssis", $title, $content, $category, $imageData, $newDisplayOrder, $author);
+            if ($stmt->execute()) {
+                echo "Blog added successfully!";
             } else {
-                // Baca gambar dan simpan sebagai BLOB
-                $image_content = file_get_contents($image_tmp_name);
-                $image_blob = mysqli_real_escape_string($conn, $image_content); // Escape BLOB data
-
-                // Query untuk memasukkan data blog ke database
-                $sql = "INSERT INTO blogs (title, content, category, author, created_at, image) 
-                        VALUES (?, ?, ?, ?, NOW(), ?)";
-                $stmt = $conn->prepare($sql);
-                $stmt->bind_param('ssssb', $title, $content, $category, $author, $image_blob);
-
-                if ($stmt->execute()) {
-                    $message = "Blog berhasil diupload!";
-                } else {
-                    $message = "Terjadi kesalahan saat mengupload blog.";
-                }
+                echo "Error: " . $stmt->error;
             }
-        } else {
-            $image_blob = NULL; // Jika tidak ada gambar yang diupload
+        }
+
+        // Hapus Blog
+        if ($_POST['action'] === 'delete') {
+            $deleteId = $_POST['id'];
+
+            // Hapus blog berdasarkan ID
+            if ($conn->query("DELETE FROM blogs WHERE id = $deleteId")) {
+                echo "Blog deleted successfully!";
+
+                // Atur ulang urutan tampilan
+                $result = $conn->query("SELECT id FROM blogs WHERE visible = 1 ORDER BY display_order ASC");
+                if ($result && $result->num_rows > 0) {
+                    $blogs = [];
+                    while ($row = $result->fetch_assoc()) {
+                        $blogs[] = $row['id'];
+                    }
+                    foreach ($blogs as $index => $blogId) {
+                        $newOrder = $index + 1;
+                        $conn->query("UPDATE blogs SET display_order = $newOrder WHERE id = $blogId");
+                    }
+                }
+            } else {
+                echo "Error: " . $conn->error;
+            }
+        }
+
+        // Update Urutan Blog
+        if ($_POST['action'] === 'update_order') {
+            $order = $_POST['order']; // Array ID blog dari AJAX
+            foreach ($order as $index => $blogId) {
+                $newOrder = $index + 1;
+                $conn->query("UPDATE blogs SET display_order = $newOrder WHERE id = $blogId");
+            }
+            echo "Blog order updated successfully!";
         }
     }
 }
+
+// Tutup koneksi database
+$conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -69,52 +85,71 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Upload Blog - Admin Dashboard</title>
-    <link rel="stylesheet" href="assets/css/adminDashboard.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <title>Admin Dashboard</title>
 </head>
 <body>
-    <div class="sidebar">
-        <div class="sidebar-header">
-            <h3>Admin Dashboard</h3>
-        </div>
-        <ul class="sidebar-menu">
-            <li><a href="#">Beranda</a></li>
-            <li><a href="#">Pengguna</a></li>
-            <li><a href="uploadBlog.php">Upload Blog</a></li>
-            <li><a href="#">Pengaturan</a></li>
-            <li><a href="../php/logout.php">Logout</a></li>
-        </ul>
-    </div>
+    <h1>Admin Dashboard</h1>
 
-    <div class="main-content">
-        <div class="welcome">
-            <h2>Upload Blog</h2>
-            <?php if ($message) { echo "<p class='message'>$message</p>"; } ?>
-        </div>
+    <!-- Form Tambah Blog -->
+    <h2>Tambah Blog Baru</h2>
+    <form action="uploadblog.php" method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="action" value="add">
+        <label for="title">Judul Blog:</label>
+        <input type="text" id="title" name="title" required><br><br>
 
-        <div class="upload-blog-form">
-            <form method="POST" action="uploadBlog.php" enctype="multipart/form-data">
-                <label for="title">Judul Blog:</label>
-                <input type="text" name="title" id="title" required>
+        <label for="content">Konten Blog:</label>
+        <textarea id="content" name="content" required></textarea><br><br>
 
-                <label for="content">Konten Blog:</label>
-                <textarea name="content" id="content" rows="10" required></textarea>
+        <label for="category">Kategori:</label>
+        <input type="text" id="category" name="category" required><br><br>
 
-                <label for="category">Kategori:</label>
-                <select name="category" id="category" required>
-                    <option value="Teknologi">Teknologi</option>
-                    <option value="Bisnis">Bisnis</option>
-                    <option value="Pendidikan">Pendidikan</option>
-                    <option value="Kesehatan">Kesehatan</option>
-                </select>
+        <label for="image">Upload Gambar:</label>
+        <input type="file" id="image" name="image" accept="image/*" required><br><br>
 
-                <label for="image">Gambar (opsional):</label>
-                <input type="file" name="image" id="image" accept="image/*">
+        <button type="submit">Tambah Blog</button>
+    </form>
 
-                <button type="submit">Upload Blog</button>
-            </form>
-        </div>
-    </div>
+    <hr>
+
+    <!-- Form Hapus Blog -->
+    <h2>Hapus Blog</h2>
+    <form action="uploadblog.php" method="POST">
+        <input type="hidden" name="action" value="delete">
+        <label for="id">ID Blog:</label>
+        <input type="number" id="id" name="id" required><br><br>
+
+        <button type="submit">Hapus Blog</button>
+    </form>
+
+    <hr>
+
+    <!-- Urutan Blog -->
+    <h2>Urutan Blog</h2>
+    <ul id="blogList">
+        <?php
+        include 'includes/db.php';
+        $result = $conn->query("SELECT id, title FROM blogs ORDER BY display_order ASC");
+        while ($row = $result->fetch_assoc()) {
+            echo '<li data-id="' . $row['id'] . '">' . htmlspecialchars($row['title']) . '</li>';
+        }
+        $conn->close();
+        ?>
+    </ul>
+    <button id="updateOrder">Update Urutan</button>
+
+    <script>
+        document.getElementById("updateOrder").addEventListener("click", function () {
+            const listItems = document.querySelectorAll("#blogList li");
+            const order = Array.from(listItems).map(item => item.dataset.id);
+
+            fetch("uploadblog.php", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ action: "update_order", order: order })
+            })
+            .then(response => response.text())
+            .then(message => alert(message));
+        });
+    </script>
 </body>
 </html>
