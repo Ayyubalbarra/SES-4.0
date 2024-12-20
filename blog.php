@@ -10,6 +10,11 @@ $sql = "SELECT id, title, content, category, image, visible, display_order
         ORDER BY display_order ASC 
         LIMIT 4"; // Ambil 1 main blog dan 3 side blogs
 $result = $conn->query($sql);
+
+// Query untuk artikel populer
+$popular_sql = "SELECT id, title, category, image, view_count FROM blogs ORDER BY view_count DESC LIMIT 4";
+$popular_result = $conn->query($popular_sql);
+
 ?>
 
 <!DOCTYPE html>
@@ -46,6 +51,7 @@ $result = $conn->query($sql);
                     if ($i == 0) {
                         // Main Blog (3x3 area)
                         echo '<div class="col-span-6 md:col-span-3 row-span-3 bg-white rounded-lg shadow-lg overflow-hidden">';
+                        echo '<a href="detail.php?id=' . $row['id'] . '">'; // Link menuju halaman detail
                         echo '<img src="data:image/jpeg;base64,' . base64_encode($row['image']) . '" alt="' . htmlspecialchars($row['title']) . '" class="w-full h-64 object-cover">';
                         echo '<div class="p-6">';
                         echo '<h2 class="text-2xl font-bold text-gray-800 mb-4">' . htmlspecialchars($row['title']) . '</h2>';
@@ -54,10 +60,12 @@ $result = $conn->query($sql);
                         echo '<span class="px-3 py-1 bg-gray-800 text-white text-sm rounded-full">' . htmlspecialchars($row['category']) . '</span>';
                         echo '</div>';
                         echo '</div>';
+                        echo '</a>'; // Akhir dari link
                         echo '</div>';
                     } else {
                         // Side Blogs (Each spans 1x3 area)
                         echo '<div class="col-span-6 md:col-span-3 bg-white rounded-lg shadow-lg overflow-hidden">';
+                        echo '<a href="detail.php?id=' . $row['id'] . '">'; // Link menuju halaman detail
                         echo '<div class="flex">';
                         echo '<img src="data:image/jpeg;base64,' . base64_encode($row['image']) . '" alt="' . htmlspecialchars($row['title']) . '" class="w-1/3 object-cover">';
                         echo '<div class="p-4 w-2/3">';
@@ -68,6 +76,7 @@ $result = $conn->query($sql);
                         echo '</div>';
                         echo '</div>';
                         echo '</div>';
+                        echo '</a>'; // Akhir dari link
                         echo '</div>';
                     }
                     $i++;
@@ -78,6 +87,31 @@ $result = $conn->query($sql);
             ?>
         </div>
     </div>
+
+    <!-- Popular Articles Section -->
+    <section class="py-8 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4">Popular Articles</h2>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <?php
+                if ($popular_result && $popular_result->num_rows > 0) {
+                    while ($row = $popular_result->fetch_assoc()) {
+                        echo '<div class="bg-white rounded-lg shadow-lg overflow-hidden">';
+                        echo '<img src="data:image/jpeg;base64,' . base64_encode($row['image']) . '" alt="' . htmlspecialchars($row['title']) . '" class="w-full h-40 object-cover">';
+                        echo '<div class="p-4">';
+                        echo '<h3 class="text-lg font-bold text-gray-800 mb-2">' . htmlspecialchars($row['title']) . '</h3>';
+                        echo '<p class="text-sm text-gray-600 mb-2">Kategori: ' . htmlspecialchars($row['category']) . '</p>';
+                        echo '<p class="text-xs text-gray-500">Views: ' . htmlspecialchars($row['view_count']) . '</p>';
+                        echo '</div>';
+                        echo '</div>';
+                    }
+                } else {
+                    echo '<p class="text-gray-600 text-center col-span-4">No popular articles available.</p>';
+                }
+                ?>
+            </div>
+        </div>
+    </section>
 
     <?php include('includes/footer.php'); ?>
 

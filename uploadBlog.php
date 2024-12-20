@@ -137,6 +137,20 @@ $conn->close();
     </ul>
     <button id="updateOrder">Update Urutan</button>
 
+    // Ambil semua blog yang ditampilkan
+    $result = $conn->query("SELECT id, title, content, view_count FROM blogs WHERE visible = 1 ORDER BY display_order ASC");
+    ?>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
+            <?php while ($row = $result->fetch_assoc()): ?>
+        <a href="detail.php?id=<?= $row['id'] ?>" class="block bg-white rounded-lg shadow hover:shadow-lg transition p-4">
+            <h2 class="text-xl font-semibold"><?= htmlspecialchars($row['title']) ?></h2>
+            <p class="text-gray-600 text-sm mt-2"><?= substr(htmlspecialchars($row['content']), 0, 100) ?>...</p>
+            <div class="text-gray-500 text-xs mt-2">Views: <?= $row['view_count'] ?></div>
+        </a>
+    <?php endwhile; ?>
+</div>
+
     <script>
         document.getElementById("updateOrder").addEventListener("click", function () {
             const listItems = document.querySelectorAll("#blogList li");
