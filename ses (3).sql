@@ -255,3 +255,22 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+-- Buat database dan tabel yang diperlukan
+CREATE TABLE products (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL,
+    image VARCHAR(255) NOT NULL,
+    price DECIMAL(10,2) NOT NULL,
+    description TEXT,
+    category VARCHAR(50) NOT NULL,
+    specifications JSON,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Contoh data
+INSERT INTO products (name, image, price, description, category, specifications) VALUES
+('Downlight', 'Image/image3.png', 299.99, 'Premium LED downlight for modern spaces', 'best-pick', 
+'{"Wattage": "15W", "Lumens": "1200lm", "Color Temperature": "3000K-6500K", "Lifespan": "50,000 hours"}'),
+('Downlight Accent', 'Image/image4.png', 249.99, 'Accent lighting solution', 'small-office',
+'{"Wattage": "10W", "Lumens": "800lm", "Color Temperature": "2700K-5000K", "Lifespan": "40,000 hours"}');

@@ -1,155 +1,157 @@
-<?php include('includes/navbar.php'); ?>
+<?php 
+include('includes/navbar.php');
+include('includes/db.php');
 
+try {
+    // Fetch products
+    $products = [];
+    $result = $conn->query("SELECT * FROM products ORDER BY created_at DESC");
+    if ($result) {
+        while ($row = $result->fetch_assoc()) {
+            $products[] = $row;
+        }
+    }
+
+    // Fetch categories
+    $categories = [];
+    $result = $conn->query("SELECT DISTINCT category FROM products");
+    if ($result) {
+        while ($row = $result->fetch_assoc()) {
+            $categories[] = $row['category'];
+        }
+    }
+} catch (Exception $e) {
+    die("Database Error: " . $e->getMessage());
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Lighting Solutions</title>
-    <link rel="stylesheet" href="assets/css/explore.css" />
-    <style>
-    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
-    </style>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet" />
-    <script src="ses.js" defer></script>
-  </head>
-  <body>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50">
+    <main class="container mx-auto px-4">
+        <!-- Hero Section -->
+        <section class="text-center py-16 bg-gradient-to-r from-gray-50 to-gray-100">
+            <h1 class="text-2xl text-gray-700 mb-3">Discover Our Smart Lighting Solutions</h1>
+            <h2 class="text-4xl font-bold text-gray-900">Transform Your Space with<br/>Intelligent Shine</h2>
+        </section>
 
+        <!-- Filter Tags -->
+        <section class="max-w-6xl mx-auto mt-8">
+            <div class="flex flex-wrap justify-center gap-4 mb-8">
+                <button class="tag active px-6 py-2 rounded-full border transition-all hover:bg-black hover:text-white" data-filter="best-pick">Best pick</button>
+                <button class="tag px-6 py-2 rounded-full border transition-all hover:bg-black hover:text-white" data-filter="small-office">Small office kit</button>
+                <button class="tag px-6 py-2 rounded-full border transition-all hover:bg-black hover:text-white" data-filter="huge-office">Huge office kit</button>
+            </div>
 
+            <!-- Featured Products Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
+                <?php if (!empty($products)): ?>
+                    <?php foreach($products as $product): ?>
+                        <div class="product-card bg-white rounded-lg shadow-md p-4 cursor-pointer transform transition-all hover:-translate-y-1 hover:shadow-xl"
+                             data-category="<?php echo htmlspecialchars($product['category']); ?>"
+                             data-product-id="<?php echo $product['id']; ?>">
+                            <img src="assets/<?php echo htmlspecialchars($product['image']); ?>" 
+                                 alt="<?php echo htmlspecialchars($product['name']); ?>"
+                                 class="w-full h-48 object-cover rounded-md mb-4">
+                            <h3 class="text-lg font-semibold text-gray-800"><?php echo htmlspecialchars($product['name']); ?></h3>
+                            <p class="text-gray-600">$<?php echo number_format($product['price'], 2); ?></p>
+                        </div>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <p class="col-span-full text-center text-gray-500">No products found</p>
+                <?php endif; ?>
+            </div>
+        </section>
 
-    <main>
-      <section class="hero">
-        <h1>Discover Our Smart Lighting Solutions</h1>
-        <h2>Transform Your Space with <br />Intelligent Shine</h2>
-      </section>
+        <!-- Categories and All Products -->
+        <section class="max-w-6xl mx-auto mt-16 mb-16">
+            <div class="flex flex-wrap gap-8 mb-8">
+                <button class="category-filter text-lg text-gray-700 hover:text-black transition-colors" 
+                        data-category="all">All Product</button>
+                <?php if (!empty($categories)): ?>
+                    <?php foreach($categories as $category): ?>
+                        <button class="category-filter text-lg text-gray-700 hover:text-black transition-colors"
+                                data-category="<?php echo htmlspecialchars($category); ?>">
+                            <?php echo ucwords(str_replace('-', ' ', $category)); ?>
+                        </button>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </div>
 
-      <section class="product-grid">
-        <div class="filter-tags">
-          <button class="tag active">Best pick</button>
-          <button class="tag">Small office kit</button>
-          <button class="tag">Huge office kit</button>
-        </div>
-        <div class="product-row">
-          <div class="product-card">
-            <img src="Image/image 3.png" alt="Downlight" />
-            <p>Downlight</p>
-          </div>
-          <div class="product-card">
-            <img src="Image/image 4.png" alt="Downlight Accent" />
-            <p>Downlight Accent</p>
-          </div>
-          <div class="product-card">
-            <img src="Image/image 5.png" alt="Spotlight" />
-            <p>Spotlight</p>
-          </div>
-          <div class="product-card">
-            <img src="Image/image 6.png" alt="Batten" />
-            <p>Batten</p>
-          </div>
-          <div class="product-card">
-            <img src="Image/image 7.png" alt="Gridlight" />
-            <p>Gridlight</p>
-          </div>
-        </div>
-      </section>
-      <pre></pre>
-      <section class="product-container">
-        <div class="categories">
-          <div class="category">
-            <h3>All Product</h3>
-            <h3>LED</h3>
-            <h3>Smart Wiz</h3>
-            <h3>Smart Hue</h3>
-            <h3>Outdoor Luminer</h3>
-          </div>
-        </div>
-
-        <!-- New Product Row Section -->
-        <div class="product-row2">
-          <div class="product-card2">
-            <img src="Image/image 3.png" alt="Downlight" />
-            <p>Downlight</p>
-          </div>
-          <div class="product-card2">
-            <img src="Image/image 4.png" alt="Downlight Accent" />
-            <p>Downlight Accent</p>
-          </div>
-          <div class="product-card2">
-            <img src="Image/image 5.png" alt="Spotlight" />
-            <p>Spotlight</p>
-          </div>
-          <div class="product-card2">
-            <img src="Image/image 6.png" alt="Batten" />
-            <p>Batten</p>
-          </div>
-          <div class="product-card2">
-            <img src="Image/image 3.png" alt="Downlight" />
-            <p>Downlight</p>
-          </div>
-          <div class="product-card2">
-            <img src="Image/image 4.png" alt="Downlight Accent" />
-            <p>Downlight Accent</p>
-          </div>
-          <div class="product-card2">
-            <img src="Image/image 5.png" alt="Spotlight" />
-            <p>Spotlight</p>
-          </div>
-          <div class="product-card2">
-            <img src="Image/image 6.png" alt="Batten" />
-            <p>Batten</p>
-          </div>
-          <div class="product-card2">
-            <img src="Image/image 3.png" alt="Downlight" />
-            <p>Downlight</p>
-          </div>
-          <div class="product-card2">
-            <img src="Image/image 4.png" alt="Downlight Accent" />
-            <p>Downlight Accent</p>
-          </div>
-          <div class="product-card2">
-            <img src="Image/image 5.png" alt="Spotlight" />
-            <p>Spotlight</p>
-          </div>
-          <div class="product-card2">
-            <img src="Image/image 6.png" alt="Batten" />
-            <p>Batten</p>
-          </div>
-        </div>
-      </section>
+            <!-- All Products Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <?php if (!empty($products)): ?>
+                    <?php foreach($products as $product): ?>
+                        <div class="product-card bg-white rounded-lg shadow-md p-4 cursor-pointer transform transition-all hover:-translate-y-1 hover:shadow-xl"
+                             data-category="<?php echo htmlspecialchars($product['category']); ?>"
+                             data-product-id="<?php echo $product['id']; ?>">
+                            <img src="assets/<?php echo htmlspecialchars($product['image']); ?>" 
+                                 alt="<?php echo htmlspecialchars($product['name']); ?>"
+                                 class="w-full h-48 object-cover rounded-md mb-4">
+                            <h3 class="text-lg font-semibold text-gray-800"><?php echo htmlspecialchars($product['name']); ?></h3>
+                            <p class="text-gray-600">$<?php echo number_format($product['price'], 2); ?></p>
+                        </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </div>
+        </section>
     </main>
 
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Handle product card clicks
+        const productCards = document.querySelectorAll('.product-card');
+        productCards.forEach(card => {
+            card.addEventListener('click', function() {
+                const productId = this.getAttribute('data-product-id');
+                window.location.href = `product-info.php?id=${productId}`;
+            });
+        });
 
+        // Handle category filtering
+        const categoryFilters = document.querySelectorAll('.category-filter');
+        categoryFilters.forEach(filter => {
+            filter.addEventListener('click', function() {
+                const category = this.getAttribute('data-category');
+                filterProducts(category);
+                
+                // Update active state
+                categoryFilters.forEach(f => f.classList.remove('font-bold', 'text-black'));
+                this.classList.add('font-bold', 'text-black');
+            });
+        });
 
-    
-<script>
-// Pilih semua elemen dengan kelas .cta-button
-const ctaButtons = document.querySelectorAll('.cta-button');
+        // Handle tag filtering
+        const tagFilters = document.querySelectorAll('.tag');
+        tagFilters.forEach(tag => {
+            tag.addEventListener('click', function() {
+                tagFilters.forEach(t => t.classList.remove('bg-black', 'text-white'));
+                this.classList.add('bg-black', 'text-white');
+                
+                const filter = this.getAttribute('data-filter');
+                filterProducts(filter);
+            });
+        });
 
-// Loop melalui semua tombol dan tambahkan event listener
-ctaButtons.forEach(function(button) {
-    button.addEventListener('click', function() {
-        // Ganti nilai isLoggedIn dengan status login yang sesuai
-        const isLoggedIn = false; // Contoh: ganti dengan logika status login yang sebenarnya
-
-        if (!isLoggedIn) {
-            window.location.href = 'Login1.php'; // Redirect ke halaman login jika belum login
-        } else {
-            // Tindakan yang akan dilakukan jika sudah login
-            alert('Proceeding to book a consultation...');
+        function filterProducts(category) {
+            const products = document.querySelectorAll('.product-card');
+            products.forEach(product => {
+                if (category === 'all' || product.getAttribute('data-category') === category) {
+                    product.style.display = 'block';
+                } else {
+                    product.style.display = 'none';
+                }
+            });
         }
     });
-});
+    </script>
 
-</script>
-
+    <?php include('includes/footer.php'); ?>
 </body>
-
-
-
 </html>
-
-
-<?php include('includes/footer.php') ?>
