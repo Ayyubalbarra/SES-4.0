@@ -48,17 +48,18 @@ try {
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="sidebar">
-        <div class="sidebar-header">
-            <h3>Admin Dashboard</h3>
-        </div>
-        <ul class="sidebar-menu">
-            <li><a href="#">Home</a></li>
-            <li><a href="#">User consultation</a></li>
-            <li><a href="uploadBlog.php">Upload blog</a></li>
-            <li><a href="logout.php">Logout</a></li>
-        </ul>
+<div class="sidebar">
+    <div class="sidebar-header">
+        <h3>Admin Dashboard</h3>
     </div>
+    <ul class="sidebar-menu">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">User consultation</a></li>
+        <li><a href="uploadBlog.php">Upload blog</a></li>
+        <li><a href="manageProducts.php">Manage Products</a></li>
+        <li><a href="logout.php">Logout</a></li>
+    </ul>
+</div>
 
     <div class="main-content">
         <div class="welcome">
