@@ -4,6 +4,38 @@ if (!isset($_SESSION['admin'])) {
     header("Location: adminDashboard.php");
     exit;
 }
+
+include 'includes/db.php';
+
+// Ambil total data dari database
+$totalUsers = 0;
+$totalReports = 0;
+$totalTransactions = 0;
+
+try {
+    // Total Pengguna
+    $result = $conn->query("SELECT COUNT(id_user) AS total FROM user");
+    if ($result) {
+        $row = $result->fetch_assoc();
+        $totalUsers = $row['total'];
+    }
+
+    // Total Laporan
+    $result = $conn->query("SELECT COUNT(id) AS total FROM consultation_form");
+    if ($result) {
+        $row = $result->fetch_assoc();
+        $totalReports = $row['total'];
+    }
+
+    // Total Transaksi
+    $result = $conn->query("SELECT COUNT(id) AS total FROM products");
+    if ($result) {
+        $row = $result->fetch_assoc();
+        $totalTransactions = $row['total'];
+    }
+} catch (Exception $e) {
+    echo "Error retrieving statistics: " . $e->getMessage();
+}
 ?>
 
 <!DOCTYPE html>
@@ -13,7 +45,6 @@ if (!isset($_SESSION['admin'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Admin</title>
     <link rel="stylesheet" href="assets/css/adminDashboard.css">
-    <!-- Menggunakan Google Font untuk tampilan lebih menarik -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -38,15 +69,15 @@ if (!isset($_SESSION['admin'])) {
         <div class="statistics">
             <div class="stat-box">
                 <h3>Total Pengguna</h3>
-                <p>1200</p>
+                <p><?= $totalUsers; ?></p>
             </div>
             <div class="stat-box">
                 <h3>Total Laporan</h3>
-                <p>350</p>
+                <p><?= $totalReports; ?></p>
             </div>
             <div class="stat-box">
                 <h3>Total Transaksi</h3>
-                <p>500</p>
+                <p><?= $totalTransactions; ?></p>
             </div>
         </div>
     </div>

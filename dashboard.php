@@ -1,104 +1,136 @@
 <?php
-// Memulai sesi
 session_start();
+require_once 'includes/db.php';
 
-// Mengecek apakah pengguna sudah login
 if (!isset($_SESSION['user_id'])) {
-    // Jika belum login, arahkan ke halaman login
-    header("Location: login.php");
+    header("Location: login1.php");
     exit();
 }
 
-// Mengambil data pengguna yang sedang login
-$user_name = $_SESSION['user_name'];  // Nama pengguna yang disimpan dalam sesi
+// Fetch running consultations
+$running_sql = "SELECT cf.*, k.status 
+               FROM konsultasi k
+               LEFT JOIN consultation_form cf ON k.id_konsul = cf.id 
+               WHERE k.id_user = ? AND (k.status = 'running' OR k.status IS NULL)
+               ORDER BY cf.created_at DESC";
+$running_stmt = $conn->prepare($running_sql);
+$running_stmt->bind_param("i", $_SESSION['user_id']);
+$running_stmt->execute();
+$running_result = $running_stmt->get_result();
+$running_consultations = [];
+while($row = $running_result->fetch_assoc()) {
+    $running_consultations[] = $row;
+}
+$running_stmt->close();
 
-// Menghubungkan file db.php
-include('includes/db.php');
-
-// Mengambil data form konsultasi dari database
-$sql = "SELECT * FROM consultation_form ORDER BY created_at DESC";
-$result = $conn->query($sql);
-
-// Menarik data konsultasi yang sedang berjalan (status 'running')
-$sql_running = "SELECT * FROM consultation_form WHERE status = 'running'";
-$result_running = $conn->query($sql_running);
-
-// Menarik data konsultasi yang sudah selesai (status 'finished')
-$sql_finished = "SELECT * FROM consultation_form WHERE status = 'finished'";
-$result_finished = $conn->query($sql_finished);
+// Fetch finished consultations
+$finished_sql = "SELECT cf.*, k.status 
+                FROM konsultasi k
+                LEFT JOIN consultation_form cf ON k.id_konsul = cf.id 
+                WHERE k.id_user = ? AND k.status = 'finished'
+                ORDER BY cf.created_at DESC";
+$finished_stmt = $conn->prepare($finished_sql);
+$finished_stmt->bind_param("i", $_SESSION['user_id']);
+$finished_stmt->execute();
+$finished_result = $finished_stmt->get_result();
+$finished_consultations = [];
+while($row = $finished_result->fetch_assoc()) {
+    $finished_consultations[] = $row;
+}
+$finished_stmt->close();
 ?>
+
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-    <link rel="stylesheet" href="assets/css/dashboard.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
-    
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
-</style>
+    <title>Dashboard - SES</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
-<body>
+<body class="bg-gray-50 min-h-screen">
+    <?php include 'includes/navbarDashboard.php'; ?>
 
-<?php include('includes/navbarDashboard.php'); ?>
+    <main class="max-w-7xl mx-auto px-4 py-8">
+        <div class="flex justify-between items-center mb-8">
+            <h1 class="text-2xl font-bold text-gray-900">
+                Welcome, <?php echo htmlspecialchars($_SESSION['user_name']); ?>
+            </h1>
+            <a href="form.php" class="inline-flex items-center px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors">
+                <i class="fas fa-plus mr-2"></i>
+                Book a Consultation
+            </a>
+        </div>
 
-<h1>Welcome, <?php echo htmlspecialchars($user_name); ?></h1>
+        <div class="grid md:grid-cols-2 gap-6">
+            <!-- Running Consultations -->
+            <div class="bg-white rounded-lg shadow-sm border p-6">
+                <h2 class="text-lg font-semibold mb-4">Running Consultation</h2>
+                <?php if (count($running_consultations) > 0): ?>
+                    <div class="space-y-4">
+                        <?php foreach ($running_consultations as $consultation): ?>
+                            <a href="detail.php?id=<?php echo $consultation['id']; ?>" 
+                               class="block p-4 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors">
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <h3 class="font-medium">
+                                            <?php echo htmlspecialchars($consultation['company_name']); ?>
+                                        </h3>
+                                        <p class="text-sm text-gray-500">
+                                            <?php echo htmlspecialchars($consultation['company_field']); ?>
+                                        </p>
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <span class="text-sm text-gray-500">
+                                            <?php echo date('d M Y', strtotime($consultation['created_at'])); ?>
+                                        </span>
+                                        <i class="fas fa-chevron-right text-gray-400"></i>
+                                    </div>
+                                </div>
+                            </a>
+                        <?php endforeach; ?>
+                    </div>
+                <?php else: ?>
+                    <p class="text-gray-500">You don't have any running consultation yet.</p>
+                <?php endif; ?>
+            </div>
 
-<a href="form.php" class="button">+ Book a Consultation</a>
-<div class="container">
-<div class="card">
-    <h2>Running Consultation</h2>
-    <hr />
-    <?php if ($result_running->num_rows > 0): ?>
-        <ul>
-            <?php while($row = $result_running->fetch_assoc()): ?>
-                <li style="display: flex; justify-content: space-between; align-items: center;">
-                    <a href="details.php?id=<?php echo $row['id']; ?>">
-                        <?php echo $row['company_name']; ?> - <?php echo $row['company_field']; ?>
-                    </a>
-                    <span class="created-at"><?php echo date('d M Y', strtotime($row['created_at'])); ?></span>
-                </li>
-            <?php endwhile; ?>
-        </ul>
-    <?php else: ?>
-        <p>You don't have any running consultation yet.</p>
-    <?php endif; ?>
-</div>
+            <!-- Finished Consultations -->
+            <div class="bg-white rounded-lg shadow-sm border p-6">
+                <h2 class="text-lg font-semibold mb-4">Finished Consultation</h2>
+                <?php if (count($finished_consultations) > 0): ?>
+                    <div class="space-y-4">
+                        <?php foreach ($finished_consultations as $consultation): ?>
+                            <a href="detail.php?id=<?php echo $consultation['id']; ?>" 
+                               class="block p-4 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors">
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <h3 class="font-medium">
+                                            <?php echo htmlspecialchars($consultation['company_name']); ?>
+                                        </h3>
+                                        <p class="text-sm text-gray-500">
+                                            <?php echo htmlspecialchars($consultation['company_field']); ?>
+                                        </p>
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <span class="text-sm text-gray-500">
+                                            <?php echo date('d M Y', strtotime($consultation['created_at'])); ?>
+                                        </span>
+                                        <i class="fas fa-chevron-right text-gray-400"></i>
+                                    </div>
+                                </div>
+                            </a>
+                        <?php endforeach; ?>
+                    </div>
+                <?php else: ?>
+                    <p class="text-gray-500">You don't have any finished consultation yet.</p>
+                <?php endif; ?>
+            </div>
+        </div>
+    </main>
 
-
-    <div class="card">
-        <h2>Finished Consultation</h2>
-        <hr />
-        <?php if ($result_finished->num_rows > 0): ?>
-            <ul>
-                <?php while($row = $result_finished->fetch_assoc()): ?>
-                    <li><?php echo $row['company_name']; ?> - <?php echo $row['company_field']; ?> (Status: <?php echo $row['status']; ?>)</li>
-                <?php endwhile; ?>
-            </ul>
-        <?php else: ?>
-            <p>You don't have any finished consultation yet.</p>
-        <?php endif; ?>
-    </div>
-</div>
-
-
-
-<p><a href="logout.php">Logout</a></p>
-
+    <?php include 'includes/tab.php'; ?>
 </body>
 </html>
-
-
-<?php
-$conn->close();
-?>
-
-
-<p><a href="logout.php">logout</a></p>
-
-
-<?php include('includes/tab.php'); ?>
