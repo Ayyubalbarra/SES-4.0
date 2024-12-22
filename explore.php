@@ -1,5 +1,5 @@
 <?php 
-include('includes/navbar.html');
+include('includes/navbar.phpl');
 include('includes/db.php');
 
 try {
