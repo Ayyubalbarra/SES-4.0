@@ -63,57 +63,62 @@
     </div>
 
     <script>
-        // Fungsi untuk mengubah status tab yang aktif
-        function setActiveTab(event, tabName) {
-            // Mengambil semua tombol tab
-            const tabs = document.querySelectorAll('.tab button');
+    // Fungsi untuk mengubah status tab yang aktif
+    function setActiveTab(event, tabName) {
+        // Mengambil semua tombol tab
+        const tabs = document.querySelectorAll('.tab button');
 
-            // Menghapus kelas 'active' dari semua tab
-            tabs.forEach(tab => {
-                tab.classList.remove('active');
-            });
+        // Menghapus kelas 'active' dari semua tab
+        tabs.forEach(tab => {
+            tab.classList.remove('active');
+        });
 
-            // Menambahkan kelas 'active' pada tab yang diklik
-            event.target.classList.add('active');
-            
-            // Menyimpan tab yang dipilih di localStorage
-            localStorage.setItem('activeTab', tabName);
-            
-            // Optional: Anda bisa menambahkan logika untuk menampilkan konten terkait tab yang dipilih
-            console.log(tabName + " tab is selected");
+        // Menambahkan kelas 'active' pada tab yang diklik
+        event.target.classList.add('active');
+        
+        // Menyimpan tab yang dipilih di localStorage
+        localStorage.setItem('activeTab', tabName);
+        
+        // Optional: Anda bisa menambahkan logika untuk menampilkan konten terkait tab yang dipilih
+        console.log(tabName + " tab is selected");
+    }
+
+    // Fungsi untuk mengarahkan ke halaman Dashboard
+    function navigateToDashboard() {
+        window.location.href = 'dashboard.php';  // Menggunakan JavaScript untuk navigasi
+    }
+
+    // Fungsi untuk mengarahkan ke halaman My Device
+    function navigateToDevice() {
+        window.location.href = 'mydevice.php';  // Menggunakan JavaScript untuk navigasi
+    }
+
+    // Fungsi untuk mengarahkan ke halaman Profile
+    function navigateToProfile() {
+        window.location.href = 'profil.php';  // Menggunakan JavaScript untuk navigasi
+    }
+
+    // Menyimpan status tab aktif saat halaman pertama kali dimuat
+    window.onload = function() {
+        const activeTab = localStorage.getItem('activeTab');
+
+        // Cek jika halaman yang sedang dibuka adalah dashboard.php
+        if (window.location.pathname.includes('dashboard.php')) {
+            // Aktifkan tab Consultation History
+            document.getElementById('consultationHistoryTab').classList.add('active');
         }
-
-        // Fungsi untuk mengarahkan ke halaman Dashboard
-        function navigateToDashboard() {
-            window.location.href = 'dashboard.php';  // Menggunakan JavaScript untuk navigasi
-        }
-
-        // Fungsi untuk mengarahkan ke halaman My Device
-        function navigateToDevice() {
-            window.location.href = 'mydevice.php';  // Menggunakan JavaScript untuk navigasi
-        }
-
-        // Fungsi untuk mengarahkan ke halaman Profile
-        function navigateToProfile() {
-            window.location.href = 'profil.php';  // Menggunakan JavaScript untuk navigasi
-        }
-
-        // Menyimpan status tab aktif saat halaman pertama kali dimuat
-        window.onload = function() {
-            const activeTab = localStorage.getItem('activeTab');
-            
-            // Jika ada tab yang disimpan di localStorage, aktifkan tab tersebut
-            if (activeTab) {
-                const activeButton = document.getElementById(activeTab + 'Tab');
-                if (activeButton) {
-                    activeButton.classList.add('active');
-                }
-            } else {
-                // Jika tidak ada tab yang disimpan, aktifkan tab pertama (Consultation History)
-                document.getElementById('consultationHistoryTab').classList.add('active');
+        // Jika ada tab yang disimpan di localStorage, aktifkan tab tersebut
+        else if (activeTab) {
+            const activeButton = document.getElementById(activeTab + 'Tab');
+            if (activeButton) {
+                activeButton.classList.add('active');
             }
+        } else {
+            // Jika tidak ada tab yang disimpan, aktifkan tab pertama (Consultation History)
+            document.getElementById('consultationHistoryTab').classList.add('active');
         }
-    </script>
+    }
+</script>
 
 </body>
 </html>

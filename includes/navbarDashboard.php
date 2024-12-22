@@ -74,9 +74,9 @@ body {
         <img src="assets/image/logo hitam.svg" alt="Logo"> <!-- Change path/logo as needed -->
     </div>
     <ul class="nav-links">
-        <li><a href="#">Home</a></li>
-        <li><a href="#">Explore</a></li>
-        <li><a href="#">Blog</a></li>
+        <li><a href="dashboard.php">Home</a></li>
+        <li><a href="explore.php">Explore</a></li>
+        <li><a href="blog.php">Blog</a></li>
      
     </ul>
 </nav>

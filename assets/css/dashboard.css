@@ -1,5 +1,4 @@
 body {
-
     margin: 0;
     padding: 0;
     background-color: #ffffff;
@@ -13,7 +12,7 @@ h1 {
     margin-top: 100px;
     color: #333;
     font-size: 35px;
-    font-family:"Plus Jakarta Sans", sans-serif;
+    font-family: "Plus Jakarta Sans", sans-serif;
     font-weight: 500;
 }
 
@@ -24,10 +23,11 @@ h1 {
     gap: 70px; /* Menambahkan jarak antar card */
     margin-top: 50px;
     padding: 10px; /* Opsional, untuk memberikan ruang di sekitar container */
+    width: 100%; /* Pastikan kontainer responsif */
+    box-sizing: border-box; /* Agar padding tidak melebihi ukuran kontainer */
 }
 
 .card {
-   
     border: 1px solid #ccc;
     border-radius: 12px;
     background: white;
@@ -35,9 +35,7 @@ h1 {
     padding: 20px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     transition: box-shadow 0.3s ease, transform 0.2s ease;
-    
 }
-
 
 .card:hover {
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
@@ -49,7 +47,7 @@ h1 {
     margin-bottom: 10px;
     color: #333;
     text-align: left;
-    font-family:"Plus Jakarta Sans", sans-serif;
+    font-family: "Plus Jakarta Sans", sans-serif;
     font-weight: 400;
 }
 
@@ -81,7 +79,6 @@ h1 {
 .card ul li a {
     text-decoration: none;
     color: #000000;
-
     transition: color 0.3s ease;
 }
 
@@ -91,7 +88,7 @@ h1 {
 
 .button {
     margin-top: 37px;
-    font-family:"Plus Jakarta Sans", sans-serif;
+    font-family: "Plus Jakarta Sans", sans-serif;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -123,14 +120,12 @@ h1 {
     position: relative;
 }
 
-
 .card > button {
-    font-family:"Plus Jakarta Sans", sans-serif;
+    font-family: "Plus Jakarta Sans", sans-serif;
     align-self: flex-end; /* Posisi tombol di sebelah kanan */
     margin-left: 30px;
     padding: 2px 15px;
     background-color: #000000;
-
     color: white;
     border: none;
     border-radius: 10px;
@@ -143,6 +138,47 @@ h1 {
     background-color: #0056b3;
 }
 
+.tab {
+    display: flex;
+    justify-content: center;
+    position: fixed; /* Tetap berada di posisi tetap */
+    bottom: 60px; /* Jarak dari tepi bawah */
+    left: 0; /* Mulai dari sisi kiri */
+    right: 0; /* Sampai ke sisi kanan */
+    background: white; /* Tambahkan background putih */
+    border-radius: 10px; /* Membuat sudut melengkung */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Bayangan di atas elemen */
+    padding: 9px 0.05px; /* Tambahkan padding untuk jarak dalam tab */
+    width: fit-content; /* Menyesuaikan lebar dengan konten */
+    margin-left: auto; /* Posisi tengah secara horizontal */
+    margin-right: auto; /* Posisi tengah secara horizontal */
+    outline: 2px solid #E6E6E6; /* Tambahkan outline */
+    z-index: 1000; /* Pastikan tab selalu di atas elemen lain */
+}
 
+.tab button {
+    margin: 0 10px;
+    padding: 3px 20px;
+    font-size: 14px;
+    border: 1.5px solid black;
+    border-radius: 10px;
+    background: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-family: "Plus Jakarta Sans", sans-serif;
+    font-weight: 200;
+}
 
+.tab button.active {
+    background-color: black;
+    color: white;
+}
 
+.tab button:focus {
+    outline: none;  /* Hapus outline default saat tab dipilih */
+}
+
+/* Hover hanya untuk tombol yang tidak aktif */
+.tab button:not(.active):hover {
+    background-color: #E6E6E6; /* Warna abu-abu saat hover */
+}

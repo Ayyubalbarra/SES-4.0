@@ -33,7 +33,10 @@ include('includes/db.php');
 
 <h1>Welcome, <?php echo htmlspecialchars($user_name); ?></h1>
 
-<a href="form.php" class="button">+ Connect a device</a>
+<a href="form.php" class="button">
+    <img src="assets/image/Vector (1).svg" alt="icon" class="button-icon">
+    ‎  ‎  Connect a Device
+</a>
 
 <!-- Tab Section -->
 

@@ -46,7 +46,7 @@ $conn->close();
 
 <?php include('includes/navbarDashboard.php'); ?>
 
-<h1>User profile</h1>
+<h1>User Profile</h1>
 
 <?php if ($profil): ?>
     <div class="profil-container">
@@ -72,7 +72,7 @@ $conn->close();
     
     <!-- Tombol untuk mengedit profil -->
     <div class="edit-profile">
-        <a href="edit_profile.php" class="button">Edit Profile</a>
+        <a href="editProfil.php" class="button">Edit Profile</a>
     </div>
 <?php else: ?>
     <p>Profil pengguna tidak ditemukan.</p>

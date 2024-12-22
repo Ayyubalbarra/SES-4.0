@@ -1,5 +1,4 @@
 <?php
-
 // Memulai sesi
 session_start();
 
@@ -9,12 +8,14 @@ if (!isset($_SESSION['user_id'])) {
     header("Location: login1.php");
     exit();
 }
+
 // Menghubungkan file db.php
 include('includes/db.php');
 
 // Mengecek apakah form telah disubmit
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Mendapatkan data dari form
+    $id_user = $_SESSION['user_id'];  // id_user dari sesi pengguna yang login
     $company_name = $_POST['company-name'];
     $company_field = $_POST['company-field'];
     $company_size = $_POST['company-size'];
@@ -36,21 +37,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         // Mengecek koneksi database
         if ($conn) {
-            // Menyimpan data ke database
-            $sql = "INSERT INTO consultation_form (company_name, company_field, company_size, company_address, current_lighting, problem_detail, goals, min_budget, max_budget, privacy_policy, updates_promotions, preferredDate)
-                    VALUES ('$company_name', '$company_field', '$company_size', '$company_address', '$current_lighting', '$problem_detail', '$goals', '$min_budget', '$max_budget', '$privacy_policy', '$updates_promotions', '$preferred_date')";
+            // Menggunakan prepared statement untuk menghindari SQL Injection
+            $stmt = $conn->prepare("INSERT INTO consultation_form (company_name, company_field, company_size, company_address, current_lighting, problem_detail, goals, min_budget, max_budget, privacy_policy, updates_promotions, preferredDate, id_user)
+                                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
-            // Mengeksekusi query dan memeriksa apakah berhasil
-            if ($conn->query($sql) === TRUE) {
+            // Mengikat parameter
+            $stmt->bind_param("sssisssiisssi", $company_name, $company_field, $company_size, $company_address, $current_lighting, $problem_detail, $goals, $min_budget, $max_budget, $privacy_policy, $updates_promotions, $preferred_date, $id_user);
+
+            // Mengeksekusi query
+            if ($stmt->execute()) {
                 // Jika berhasil disimpan
                 echo "<script>alert('Form berhasil disubmit! Terima kasih telah mengisi form.');</script>";
                 echo "<script>window.location.href='form.php';</script>"; // Opsional: redirect ke halaman form
             } else {
                 // Jika terjadi kesalahan dalam eksekusi query
-                echo "<script>alert('Error: " . $conn->error . "');</script>";
+                echo "<script>alert('Error: " . $stmt->error . "');</script>";
             }
 
-            // Menutup koneksi
+            // Menutup statement dan koneksi
+            $stmt->close();
             $conn->close();
         } else {
             // Jika koneksi ke database gagal
@@ -62,7 +67,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <?php include('includes/navbarDashboard.php'); ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -70,31 +74,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Company Consultation Form</title>
     <link rel="stylesheet" href="assets/css/form.css">
-    
 </head>
 <body>
 
-
-
-
     <div class="wrapper">
         <!-- Menambahkan kalimat di luar form dan memastikan posisinya di atas -->
-          <div class="form-description">
-        <h1>Tell us your story,</h1>
-        <h1>and get your advice soon</h1>
-    </div>
-
+        <div class="form-description">
+            <h1>Tell us your story,</h1>
+            <h1>and get your advice soon</h1>
+        </div>
 
         <div class="form-container">
             <h2>Company Detail</h2>
             <p>Tell us about your company</p>
-            
+
             <form action="form.php" method="POST">
+                <!-- Menambahkan hidden input untuk id_user -->
+                <input type="hidden" name="id_user" value="<?php echo $_SESSION['user_id']; ?>">
+
                 <!-- Company Details -->
                 <div class="form-group">
                     <label for="company-name">Company Name</label>
                     <input type="text" id="company-name" name="company-name" placeholder="e.g. SES" required>
-
                 </div>
 
                 <div class="form-group">
@@ -154,17 +155,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <label for="updates-promotions">I agree to receive updates, promotions, and other communications related to your products and services.</label>
                 </div>
                 <div class="actions">
-    <a href="dashboard.php" class="cancel-btn" style="text-decoration: none;">Cancel</a>
-    <button type="submit" class="submit-btn">Save Form</button>
-</div>
-
+                    <a href="dashboard.php" class="cancel-btn" style="text-decoration: none;">Cancel</a>
+                    <button type="submit" class="submit-btn">Save Form</button>
+                </div>
             </form>
         </div>
     </div>
 
-  
-  
 </body>
-
-
 </html>
