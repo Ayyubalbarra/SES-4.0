@@ -61,46 +61,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Update Urutan Blog
         if ($_POST['action'] === 'update_order') {
-            $data = json_decode(file_get_contents('blog.php'), true);
-            if (isset($data['order'])) {
-                foreach ($data['order'] as $index => $blogId) {
-                    $newOrder = $index + 1;
-                    $conn->query("UPDATE blogs SET display_order = $newOrder WHERE id = $blogId");
+            try {
+                // Ambil data urutan dari POST, yang dikirim menggunakan FormData
+                $order = json_decode($_POST['order'], true); // Menggunakan $_POST['order'] yang dikirim menggunakan FormData
+                
+                if (!is_array($order)) {
+                    throw new Exception('Invalid order data format');
                 }
-                echo "Blog order updated successfully!";
+
+                // Memperbarui urutan display_order di database
+                foreach ($order as $index => $blogId) {
+                    $newOrder = $index + 1; // Urutan baru berdasarkan indeks
+                    $blogId = (int)$blogId; // Mengkonversi ID menjadi integer
+                    $stmt = $conn->prepare("UPDATE blogs SET display_order = ? WHERE id = ?");
+                    $stmt->bind_param("ii", $newOrder, $blogId);
+
+                    if (!$stmt->execute()) {
+                        throw new Exception('Failed to update order for blog ID: ' . $blogId);
+                    }
+                }
+
+                echo "Urutan blog berhasil diperbarui!";
+                exit;
+            } catch (Exception $e) {
+                http_response_code(500);
+                echo "Error: " . $e->getMessage();
                 exit;
             }
         }
-    }
-}
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['action']) && $_POST['action'] === 'update_order') {
-        try {
-            $orderData = json_decode($_POST['order'], true);
-            if (json_last_error() !== JSON_ERROR_NONE) {
-                throw new Exception('Invalid JSON data');
-            }
-
-            if (!is_array($orderData)) {
-                throw new Exception('Invalid order data format');
-            }
-
-            foreach ($orderData as $index => $blogId) {
-                $newOrder = $index + 1;
-                $blogId = (int)$blogId;
-                if (!$conn->query("UPDATE blogs SET display_order = $newOrder WHERE id = $blogId")) {
-                    throw new Exception($conn->error);
-                }
-            }
-
-            echo "Urutan blog berhasil diperbarui!";
-            exit;
-        } catch (Exception $e) {
-            http_response_code(500);
-            echo "Error: " . $e->getMessage();
-            exit;
-        }
-    }
+    }        
 }
 ?>
 
@@ -116,7 +105,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body class="bg-gray-100">
     <div class="container mx-auto px-4 py-8">
         <h1 class="text-4xl font-bold mb-8 text-gray-800">Admin Dashboard</h1>
-
+        
+        <!-- Back Button -->
+        <div class="max-w-4xl mt-8">
+            <a href="adminDashboard.php" class="text-gray-600 hover:text-gray-800">
+                ← Back to Articles
+            </a>
+        </div>
         <?php if (isset($message)): ?>
             <div class="mb-4 p-4 rounded <?= $messageType === 'success' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700' ?>">
                 <?= htmlspecialchars($message) ?>
@@ -202,8 +197,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <?php
             $result = $conn->query("SELECT id, title, content, view_count FROM blogs WHERE visible = 1 ORDER BY display_order ASC");
-            while ($row = $result->fetch_assoc()):
-            ?>
+            while ($row = $result->fetch_assoc()): ?>
                 <a href="detail.php?id=<?= $row['id'] ?>" 
                    class="block bg-white rounded-lg shadow hover:shadow-lg transition p-4">
                     <h2 class="text-xl font-semibold"><?= htmlspecialchars($row['title']) ?></h2>
@@ -232,10 +226,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         this.innerHTML = 'Updating...';
         this.disabled = true;
 
-        // Kirim data sebagai application/x-www-form-urlencoded
+        // Kirim data urutan dalam format FormData
         const formData = new FormData();
         formData.append('action', 'update_order');
-        formData.append('order', JSON.stringify(order));
+        formData.append('order', JSON.stringify(order)); // Mengirimkan urutan dalam format JSON
 
         fetch("uploadblog.php", {
             method: "POST",
@@ -248,8 +242,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             return response.text();
         })
         .then(message => {
-            alert(message);
-            window.location.reload();
+            alert(message); // Menampilkan pesan keberhasilan
+            window.location.reload(); // Memuat ulang halaman untuk menampilkan urutan terbaru
         })
         .catch(error => {
             console.error('Error:', error);
@@ -262,6 +256,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             button.disabled = false;
         });
     });
-</script>
+    </script>
 </body>
 </html>
