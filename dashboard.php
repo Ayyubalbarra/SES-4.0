@@ -5,7 +5,7 @@ session_start();
 // Mengecek apakah pengguna sudah login
 if (!isset($_SESSION['user_id'])) {
     // Jika belum login, arahkan ke halaman login
-    header("Location: login.php");
+    header("Location: login1.php");
     exit();
 }
 
@@ -65,7 +65,7 @@ $result_finished = $conn->query($sql_finished);
             <?php endwhile; ?>
         </ul>
     <?php else: ?>
-        <p>You don't have any running consultation yet.</p>
+        <p style="text-align: left;">You don't have any running consultation yet.</p>
     <?php endif; ?>
 </div>
 
@@ -80,14 +80,12 @@ $result_finished = $conn->query($sql_finished);
                 <?php endwhile; ?>
             </ul>
         <?php else: ?>
-            <p>You don't have any finished consultation yet.</p>
+            <p style="text-align: left;">You don't have any finished consultation yet.</p>
         <?php endif; ?>
     </div>
 </div>
 
 
-
-<p><a href="logout.php">Logout</a></p>
 
 </body>
 </html>
@@ -96,9 +94,6 @@ $result_finished = $conn->query($sql_finished);
 <?php
 $conn->close();
 ?>
-
-
-<p><a href="logout.php">logout</a></p>
 
 
 <?php include('includes/tab.php'); ?>

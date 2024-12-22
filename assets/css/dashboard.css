@@ -118,3 +118,31 @@ h1 {
     font-size: 18px; /* Ukuran ikon lebih besar sedikit */
     font-weight: bold; /* Ikon tebal */
 }
+
+.container {
+    position: relative;
+}
+
+
+.card > button {
+    font-family:"Plus Jakarta Sans", sans-serif;
+    align-self: flex-end; /* Posisi tombol di sebelah kanan */
+    margin-left: 30px;
+    padding: 2px 15px;
+    background-color: #000000;
+
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.card > button:hover {
+    background-color: #0056b3;
+}
+
+
+
+

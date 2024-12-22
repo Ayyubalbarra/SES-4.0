@@ -7,6 +7,7 @@ if (isset($_SESSION['user_id'])) {
     header("Location: dashboard.php");
     exit(); // Ensure no further code is executed
 }
+
 include('includes/db.php'); // Include the database connection
 
 // Message for success or error
@@ -26,8 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $checkEmail = "SELECT * FROM user WHERE email = ?";
     $stmt = $conn->prepare($checkEmail);
     if (!$stmt) {
-        // If prepare failed, show an error message
-        die("Prepare failed: " . $conn->error);
+        die("Prepare failed: " . $conn->error);  // Debugging help if preparation fails
     }
     $stmt->bind_param("s", $email);
     $stmt->execute();
@@ -41,22 +41,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
         // Google-related fields can be set to NULL as we don't use them in this form
-        $google_id = NULL;
-        $google_token = NULL;
-        $google_avatar = NULL;
+        $google_id = $google_token = $google_avatar = NULL;
+
+        // Avatar field set to null as we want to use a default value
+        $avatar = 'assets/image/default_avatar.jpg'; // Ensure this path is correct
 
         // Insert data into the database using prepared statements
-        $sql = "INSERT INTO user (name, last_name, business_name, email, phone_number, password, google_id, google_token, google_avatar) 
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO user (business_name, email, google_id, google_token, google_avatar, name, last_name, phone_number, password, activation_code, avatar) 
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
 
         if (!$stmt) {
-            // If prepare failed, show an error message
-            die("Prepare failed: " . $conn->error);
+            die("Prepare failed: " . $conn->error);  // Debugging help if preparation fails
         }
 
         // Bind the parameters and execute the query
-        $stmt->bind_param("sssssssss", $name, $last_name, $business_name, $email, $phone_number, $hashed_password, $google_id, $google_token, $google_avatar);
+        $activation_code = NULL; // Default activation code is NULL
+        $stmt->bind_param("sssssssssss", $business_name, $email, $google_id, $google_token, $google_avatar, $name, $last_name, $phone_number, $hashed_password, $activation_code, $avatar);
 
         if ($stmt->execute()) {
             // Success message, redirect to login
@@ -64,7 +65,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             header("Location: Login1.php?message=" . urlencode($message));
             exit(); // Ensure no further code is executed after redirection
         } else {
-            // Log error if query execution fails
             die("Error executing query: " . $stmt->error); // Capture query execution errors
         }
     } else {
@@ -74,7 +74,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 ?>
 
-<!-- Registration Form -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -95,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <!-- Navbar -->
     <nav class="navbar">
     <div class="logo">
-        <a href="index.php"> <!-- Tambahkan URL yang diinginkan -->
+        <a href="index.php">
             <img src="assets/image/logo putih.svg" alt="Logo">
         </a>
     </div>

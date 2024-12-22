@@ -38,66 +38,65 @@ if (isset($_GET['id'])) {
 
 <?php include('includes/navbarDashboard.php'); ?>
 
-<h1>Consultation Details</h1>
+<div class="container">
+    
+    <h1>Consultation Detail</h1>
+    <form class="consultation-detail-form">
+        <fieldset>
+            <legend>Company Detail</legend>
+         
+            <div class="form-group">
+                <label>Company Name</label>
+                <input type="text" value="<?php echo $data['company_name']; ?>" readonly>
+            </div>
+            <div class="form-group">
+                <label>Company Field</label>
+                <input type="text" value="<?php echo $data['company_field']; ?>" readonly>
+            </div>
+            <div class="form-group">
+                <label>Company Size</label>
+                <input type="text" value="<?php echo $data['company_size']; ?>" readonly>
+            </div>
+            <div class="form-group">
+                <label>Company Address</label>
+                <input type="text" value="<?php echo $data['company_address']; ?>" readonly>
+            </div>
+        </fieldset>
 
-<div class="details-container">
-    <table class="details-table">
-        <tr>
-            <th>ID</th>
-            <td><?php echo $data['id']; ?></td>
-        </tr>
-        <tr>
-            <th>Company Name</th>
-            <td><?php echo $data['company_name']; ?></td>
-        </tr>
-        <tr>
-            <th>Company Field</th>
-            <td><?php echo $data['company_field']; ?></td>
-        </tr>
-        <tr>
-            <th>Company Size</th>
-            <td><?php echo $data['company_size']; ?></td>
-        </tr>
-        <tr>
-            <th>Company Address</th>
-            <td><?php echo $data['company_address']; ?></td>
-        </tr>
-        <tr>
-            <th>Current Lighting</th>
-            <td><?php echo $data['current_lighting'] ? $data['current_lighting'] : 'N/A'; ?></td>
-        </tr>
-        <tr>
-            <th>Problem Detail</th>
-            <td><?php echo $data['problem_detail'] ? $data['problem_detail'] : 'N/A'; ?></td>
-        </tr>
-        <tr>
-            <th>Goals</th>
-            <td><?php echo $data['goals'] ? $data['goals'] : 'N/A'; ?></td>
-        </tr>
-        <tr>
-            <th>Min Budget</th>
-            <td><?php echo $data['min_budget'] ? 'Rp ' . number_format($data['min_budget'], 0, ',', '.') : 'N/A'; ?></td>
-        </tr>
-        <tr>
-            <th>Max Budget</th>
-            <td><?php echo $data['max_budget'] ? 'Rp ' . number_format($data['max_budget'], 0, ',', '.') : 'N/A'; ?></td>
-        </tr>
-        <tr>
-            <th>Privacy Policy</th>
-            <td><?php echo $data['privacy_policy'] ? 'Agreed' : 'Not Agreed'; ?></td>
-        </tr>
-        <tr>
-            <th>Updates & Promotions</th>
-            <td><?php echo $data['updates_promotions'] ? 'Agreed' : 'Not Agreed'; ?></td>
-        </tr>
-        <tr>
-            <th>Created At</th>
-            <td><?php echo $data['created_at']; ?></td>
-        </tr>
-    </table>
+        <fieldset>
+            <legend>Consultation Detail</legend>
+            <div class="form-group">
+                <label>Current Lighting</label>
+                <input type="text" value="<?php echo $data['current_lighting'] ? $data['current_lighting'] : 'N/A'; ?>" readonly>
+            </div>
+            <div class="form-group">
+                <label>Problem Detail</label>
+                <textarea readonly><?php echo $data['problem_detail'] ? $data['problem_detail'] : 'N/A'; ?></textarea>
+            </div>
+            <div class="form-group">
+                <label>Goals</label>
+                <textarea readonly><?php echo $data['goals'] ? $data['goals'] : 'N/A'; ?></textarea>
+            </div>
+            <div class="form-group">
+                <label>Min Budget</label>
+                <input type="text" value="<?php echo $data['min_budget'] ? 'Rp ' . number_format($data['min_budget'], 0, ',', '.') : 'N/A'; ?>" readonly>
+            </div>
+            <div class="form-group">
+                <label>Max Budget</label>
+                <input type="text" value="<?php echo $data['max_budget'] ? 'Rp ' . number_format($data['max_budget'], 0, ',', '.') : 'N/A'; ?>" readonly>
+            </div>
+            <div class="form-group">
+                <label>Preferred Date</label>
+                <input type="text" value="<?php echo $data['preferredDate'] ? $data['preferredDate'] : 'N/A'; ?>" readonly>
+            </div>
+            <div class="form-group">
+                <label>Created At</label>
+                <input type="text" value="<?php echo $data['created_at']; ?>" readonly>
+            </div>
+        </fieldset>
+
+    </form>
 </div>
-
-<p><a href="dashboard.php">Back to Dashboard</a></p>
 
 </body>
 </html>

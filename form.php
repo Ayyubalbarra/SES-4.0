@@ -1,4 +1,14 @@
 <?php
+
+// Memulai sesi
+session_start();
+
+// Mengecek apakah pengguna sudah login
+if (!isset($_SESSION['user_id'])) {
+    // Jika belum login, arahkan ke halaman login
+    header("Location: login1.php");
+    exit();
+}
 // Menghubungkan file db.php
 include('includes/db.php');
 
@@ -16,6 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $max_budget = $_POST['max-budget'];
     $privacy_policy = isset($_POST['privacy-policy']) ? 1 : 0;
     $updates_promotions = isset($_POST['updates-promotions']) ? 1 : 0;
+    $preferred_date = $_POST['preferred-date']; // Get the preferred date
 
     // Validasi checkbox
     if (!$privacy_policy) {
@@ -26,8 +37,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Mengecek koneksi database
         if ($conn) {
             // Menyimpan data ke database
-            $sql = "INSERT INTO consultation_form (company_name, company_field, company_size, company_address, current_lighting, problem_detail, goals, min_budget, max_budget, privacy_policy, updates_promotions)
-                    VALUES ('$company_name', '$company_field', '$company_size', '$company_address', '$current_lighting', '$problem_detail', '$goals', '$min_budget', '$max_budget', '$privacy_policy', '$updates_promotions')";
+            $sql = "INSERT INTO consultation_form (company_name, company_field, company_size, company_address, current_lighting, problem_detail, goals, min_budget, max_budget, privacy_policy, updates_promotions, preferredDate)
+                    VALUES ('$company_name', '$company_field', '$company_size', '$company_address', '$current_lighting', '$problem_detail', '$goals', '$min_budget', '$max_budget', '$privacy_policy', '$updates_promotions', '$preferred_date')";
 
             // Mengeksekusi query dan memeriksa apakah berhasil
             if ($conn->query($sql) === TRUE) {
@@ -48,6 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
+
 <?php include('includes/navbarDashboard.php'); ?>
 
 
@@ -138,7 +150,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <label for="updates-promotions">I agree to receive updates, promotions, and other communications related to your products and services.</label>
                 </div>
                 <div class="actions">
-    <button type="reset" class="cancel-btn">Cancel</button>
+    <a href="dashboard.php" class="cancel-btn" style="text-decoration: none;">Cancel</a>
     <button type="submit" class="submit-btn">Save Form</button>
 </div>
 

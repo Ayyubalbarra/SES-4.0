@@ -59,7 +59,7 @@
         <!-- Menambahkan fungsi untuk mengarahkan ke dashboard.php saat ditekan -->
         <button id="consultationHistoryTab" onclick="setActiveTab(event, 'consultationHistory'); navigateToDashboard()">Consultation History</button>
         <button id="myDeviceTab" onclick="setActiveTab(event, 'myDevice'); navigateToDevice()">My Device</button>
-        <button id="profileTab" onclick="setActiveTab(event, 'profile')">Profile</button>
+        <button id="profileTab" onclick="setActiveTab(event, 'profile'); navigateToProfile()">Profile</button>
     </div>
 
     <script>
@@ -91,6 +91,11 @@
         // Fungsi untuk mengarahkan ke halaman My Device
         function navigateToDevice() {
             window.location.href = 'mydevice.php';  // Menggunakan JavaScript untuk navigasi
+        }
+
+        // Fungsi untuk mengarahkan ke halaman Profile
+        function navigateToProfile() {
+            window.location.href = 'profil.php';  // Menggunakan JavaScript untuk navigasi
         }
 
         // Menyimpan status tab aktif saat halaman pertama kali dimuat

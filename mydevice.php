@@ -34,6 +34,28 @@ include('includes/db.php');
 
 <!-- Tab Section -->
 
+<div class="container">
+    <div class="card">
+        <h2>Connected Device</h2>
+        <hr />
+        <?php if ($connected_device->num_rows > 0): ?>
+            <ul>
+                <?php while($row = $connected_device->fetch_assoc()): ?>
+                    <li style="display: flex; justify-content: space-between; align-items: center;">
+                        <a href="details.php?id=<?php echo $row['id']; ?>">
+                            <?php echo $row['device_name']; ?> 
+                        </a>
+                    </li>
+                <?php endwhile; ?>
+            </ul>
+        <?php else: ?>
+            <p style="text-align: left;">You don't have any device yet.</p>
+        <?php endif; ?>
+        
+
+    </div>
+</div>
+
 
 
 
