@@ -10,7 +10,7 @@ if (isset($_SESSION['user_id'])) {
 
 ?>
 
-<?php include('includes/navbar.php'); ?>
+<?php include('includes/navbar.html'); ?>
 
 
 
