@@ -74,12 +74,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body>
 
+
+
+
     <div class="wrapper">
         <!-- Menambahkan kalimat di luar form dan memastikan posisinya di atas -->
           <div class="form-description">
         <h1>Tell us your story,</h1>
         <h1>and get your advice soon</h1>
     </div>
+
 
         <div class="form-container">
             <h2>Company Detail</h2>
