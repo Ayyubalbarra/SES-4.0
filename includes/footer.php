@@ -12,13 +12,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Main Content Area (for demo purposes) -->
-    <main class="min-h-screen">
-        <!-- Your main content goes here -->
-    </main>
-
     <!-- Footer Section -->
-    <footer class="mt-20 text-white py-2 relative">
+    <footer class="mt-18 text-white py-2 relative">
         <!-- SVG Background -->
         <div class="absolute inset-0 -z-10">
         <svg width="1440" height="390" viewBox="0 0 1440 390" fill="none" xmlns="http://www.w3.org/2000/svg">
