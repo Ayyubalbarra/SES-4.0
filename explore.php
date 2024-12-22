@@ -32,6 +32,16 @@ try {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Lighting Solutions</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .category-filter.active {
+            color: #000;
+            font-weight: 600;
+        }
+        .tag.active {
+            background-color: #000;
+            color: #fff;
+        }
+    </style>
 </head>
 <body class="bg-gray-50">
     <main class="container mx-auto px-4">
@@ -56,7 +66,7 @@ try {
                         <div class="product-card bg-white rounded-lg shadow-md p-4 cursor-pointer transform transition-all hover:-translate-y-1 hover:shadow-xl"
                              data-category="<?php echo htmlspecialchars($product['category']); ?>"
                              data-product-id="<?php echo $product['id']; ?>">
-                            <img src="data:image/jpeg;base64,<?php echo base64_encode($product['image']); ?>" 
+                            <img src="<?php echo htmlspecialchars($product['image']); ?>" 
                                  alt="<?php echo htmlspecialchars($product['name']); ?>"
                                  class="w-full h-48 object-cover rounded-md mb-4"
                                  onerror="this.src='assets/default-product.jpg'">
@@ -73,7 +83,7 @@ try {
         <!-- Categories and All Products -->
         <section class="max-w-6xl mx-auto mt-16 mb-16">
             <div class="flex flex-wrap gap-8 mb-8">
-                <button class="category-filter text-lg text-gray-700 hover:text-black transition-colors" 
+                <button class="category-filter active text-lg text-gray-700 hover:text-black transition-colors" 
                         data-category="all">All Product</button>
                 <?php if (!empty($categories)): ?>
                     <?php foreach($categories as $category): ?>
@@ -86,13 +96,13 @@ try {
             </div>
 
             <!-- All Products Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6" id="products-grid">
                 <?php if (!empty($products)): ?>
                     <?php foreach($products as $product): ?>
                         <div class="product-card bg-white rounded-lg shadow-md p-4 cursor-pointer transform transition-all hover:-translate-y-1 hover:shadow-xl"
                              data-category="<?php echo htmlspecialchars($product['category']); ?>"
                              data-product-id="<?php echo $product['id']; ?>">
-                            <img src="data:image/jpeg;base64,<?php echo base64_encode($product['image']); ?>" 
+                            <img src="<?php echo htmlspecialchars($product['image']); ?>" 
                                  alt="<?php echo htmlspecialchars($product['name']); ?>"
                                  class="w-full h-48 object-cover rounded-md mb-4"
                                  onerror="this.src='assets/default-product.jpg'">
@@ -106,7 +116,62 @@ try {
     </main>
 
     <script>
-    // Script JavaScript tetap sama seperti sebelumnya
+    document.addEventListener('DOMContentLoaded', function() {
+        // Get all product cards
+        const productCards = document.querySelectorAll('.product-card');
+        
+        // Add click event listener to each product card
+        productCards.forEach(card => {
+            card.addEventListener('click', function() {
+                const productId = this.getAttribute('data-product-id');
+                if (productId) {
+                    // Use the correct path to product-info.php
+                    window.location.href = `/SES-4.0/product-info.php?id=${productId}`;
+                }
+            });
+        });
+        
+        // Handle category filters
+        const categoryFilters = document.querySelectorAll('.category-filter');
+        categoryFilters.forEach(filter => {
+            filter.addEventListener('click', function() {
+                const category = this.getAttribute('data-category');
+                
+                categoryFilters.forEach(f => f.classList.remove('active'));
+                this.classList.add('active');
+                
+                productCards.forEach(card => {
+                    if (category === 'all' || card.getAttribute('data-category') === category) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Handle tag filters
+        const tagButtons = document.querySelectorAll('.tag');
+        tagButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const filter = this.getAttribute('data-filter');
+                
+                tagButtons.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                productCards.forEach(card => {
+                    const category = card.getAttribute('data-category');
+                    if (filter === 'best-pick' && category === 'featured' ||
+                        filter === 'small-office' && category === 'small-office' ||
+                        filter === 'huge-office' && category === 'huge-office') {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+    });
     </script>
 
     <?php include('includes/footer.php'); ?>
