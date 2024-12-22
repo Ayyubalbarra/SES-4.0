@@ -12,7 +12,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Arial, sans-serif;
+    font-family: "Plus Jakarta Sans", sans-serif; /* Changed to "Plus Jakarta Sans", sans-serif */
 }
 
 body {
@@ -56,7 +56,7 @@ body {
     font-size: 1.1em;
     font-weight: 500;
     transition: color 0.3s ease;
-    font-family:"Plus Jakarta Sans", sans-serif;
+    font-family: "Plus Jakarta Sans", sans-serif; /* Changed to "Plus Jakarta Sans", sans-serif */
     font-weight: 200;
 }
 
@@ -75,8 +75,8 @@ body {
     </div>
     <ul class="nav-links">
         <li><a href="dashboard.php">Home</a></li>
-        <li><a href="explore.php">Explore</a></li>
-        <li><a href="blog.php">Blog</a></li>
+        <li><a href="explore2.php">Explore</a></li>
+        <li><a href="blog2.php">Blog</a></li>
      
     </ul>
 </nav>
