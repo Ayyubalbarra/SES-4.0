@@ -41,8 +41,7 @@ include('includes/navbar.php'); // Navbar tetap ditampilkan
     include('includes/features.php'); // Menampilkan fitur
     include('includes/category.php'); // Menampilkan kategori
     include('includes/embrace.php'); // Menampilkan embrace
-    include('includes/smartsection.php'); // Menampilkan embrace
- 
+    include('includes/smartsection.php'); // Menampilkan smart section
     include('includes/testimoni.php'); // Menampilkan testimoni
     include('includes/stillnotsure.php'); // Menampilkan bagian still not sure
     include('includes/blogsection.php'); // Menampilkan blog
