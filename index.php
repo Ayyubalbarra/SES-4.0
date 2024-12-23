@@ -8,10 +8,8 @@ if (isset($_SESSION['user_id'])) {
     exit();
 }
 
+include('includes/navbar.php'); // Navbar tetap ditampilkan
 ?>
-
-
-<?php include('includes/navbar.php'); ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -23,76 +21,61 @@ if (isset($_SESSION['user_id'])) {
   <link rel="stylesheet" href="styles.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <script src="assets/js/script.js" defer></script>
-
-
 </head>
 
 <body>
   <!-- Frame 7 - Hero Section -->
-
   <div class="Containerlampu">
-  <!-- Pembungkus latar belakang untuk efek fade -->
-  <div id="backgroundWrapper"></div>
-
-  <!-- Overlay dengan gambar lampu dan tulisan -->
-  <div class="overlay" id="overlay">
-    <img src="assets/image/Property 1 Default.svg" alt="Gambar Overlay" class="lampuImage" id="lampuImage">
-    
-    <!-- Tambahkan tulisan di bawah gambar -->
-    <p class="lampuText" id="lampuText">Turn your light up</p>
+    <div id="backgroundWrapper"></div>
+    <div class="overlay" id="overlay">
+      <img src="assets/image/Property 1 Default.svg" alt="Gambar Overlay" class="lampuImage" id="lampuImage">
+      <p class="lampuText" id="lampuText">Turn your light up</p>
+    </div>
+    <img src="assets/image/Union.svg" alt="Gambar Latar" class="gambarBlank" id="gambarBlank">
   </div>
 
-  <!-- Gambar latar belakang yang akan diganti -->
-  <img src="assets/image/Union.svg" alt="Gambar Latar" class="gambarBlank" id="gambarBlank">
-</div>
+  <!-- Section untuk menampilkan berbagai konten -->
+  <div class="content-sections">
+    <?php
+    include('includes/textsection.php'); // Menampilkan bagian text
+    include('includes/features.php'); // Menampilkan fitur
+    include('includes/category.php'); // Menampilkan kategori
+    include('includes/embrace.php'); // Menampilkan embrace
+    include('includes/smartsection.php'); // Menampilkan embrace
+ 
+    include('includes/testimoni.php'); // Menampilkan testimoni
+    include('includes/stillnotsure.php'); // Menampilkan bagian still not sure
+    include('includes/blogsection.php'); // Menampilkan blog
 
 
-  <!-- pembungkus latar belakang untuk efek fade -->
 
+    ?>
+  </div>
 
-
-
-
-
-<script>// Pilih semua elemen dengan kelas .cta-button dan .cta-button-r
-const ctaButtons = document.querySelectorAll('.cta-button, .cta-button-r');
-
-// Loop melalui semua tombol dan tambahkan event listener
-ctaButtons.forEach(function(button) {
-    button.addEventListener('click', function() {
-        // Ganti nilai isLoggedIn dengan status login yang sesuai
-        const isLoggedIn = false; // Contoh: ganti dengan logika status login yang sebenarnya
-
-        if (!isLoggedIn) {
-            window.location.href = 'php/Login1.php'; // Redirect ke halaman login jika belum login
-        } else {
-            // Tindakan yang akan dilakukan jika sudah login
-            alert('Proceeding to book a consultation...');
-        }
+  <script>
+    // Skrip tambahan yang sudah ada
+    const ctaButtons = document.querySelectorAll('.cta-button, .cta-button-r');
+    ctaButtons.forEach(function(button) {
+        button.addEventListener('click', function() {
+            const isLoggedIn = false;
+            if (!isLoggedIn) {
+                window.location.href = 'php/Login1.php';
+            } else {
+                alert('Proceeding to book a consultation...');
+            }
+        });
     });
-});
 
-
-
-
-  document.addEventListener("DOMContentLoaded", function() {
-    const categoryTags = document.querySelectorAll('.category-tag');
-
-    categoryTags.forEach(tag => {
-      tag.addEventListener('click', function() {
-        // Remove the active class from all category tags
-        categoryTags.forEach(t => t.classList.remove('active'));
-        
-        // Add the active class to the clicked category tag
-        this.classList.add('active');
+    document.addEventListener("DOMContentLoaded", function() {
+      const categoryTags = document.querySelectorAll('.category-tag');
+      categoryTags.forEach(tag => {
+        tag.addEventListener('click', function() {
+          categoryTags.forEach(t => t.classList.remove('active'));
+          this.classList.add('active');
+        });
       });
     });
-  });
-
-
-
-
-</script>
+  </script>
 
 </body>
 

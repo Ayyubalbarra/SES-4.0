@@ -15,30 +15,47 @@
     <!-- Product Grid -->
     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6 mb-12">
       <?php
-      $products = [
-          ['name' => 'Downlight', 'image' => 'assets/image/image 3.png'],
-          ['name' => 'Downlight Accent', 'image' => 'assets/image/image 4.png'],
-          ['name' => 'Downlight', 'image' => 'assets/image/image 5.png'],
-          ['name' => 'Batten', 'image' => 'assets/image/image 6.png'],
-          ['name' => 'Gridlight', 'image' => 'assets/image/image 7.png'],
-      ];
+      // Database connection
+      $conn = new mysqli("localhost", "root", "141414", "ses");
 
-      foreach ($products as $product) : ?>
+      // Check connection
+      if ($conn->connect_error) {
+          die("Connection failed: " . $conn->connect_error);
+      }
+
+      // Fetch products from the database (limit to 5 items)
+      $sql = "SELECT name, image, price, description FROM products LIMIT 5";
+      $result = $conn->query($sql);
+
+      if ($result->num_rows > 0) {
+          while ($row = $result->fetch_assoc()) {
+              $imageData = base64_encode($row['image']); // Assuming 'image' is stored as binary data
+              $imageSrc = 'data:image/png;base64,' . $imageData;
+      ?>
           <div class="bg-white rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow duration-300">
               <div class="aspect-square mb-4">
-                  <img src="<?php echo $product['image']; ?>" 
-                       alt="<?php echo $product['name']; ?>" 
+                  <img src="<?php echo $imageSrc; ?>" 
+                       alt="<?php echo htmlspecialchars($row['name']); ?>" 
                        class="w-full h-full object-contain">
               </div>
-              <p class="text-center font-medium"><?php echo $product['name']; ?></p>
+              <p class="text-center font-medium"><?php echo htmlspecialchars($row['name']); ?></p>
+              <p class="text-center text-gray-500">$<?php echo number_format($row['price'], 2); ?></p>
           </div>
-      <?php endforeach; ?>
+      <?php
+          }
+      } else {
+          echo "<p class='text-center text-gray-500'>No products available.</p>";
+      }
+
+      // Close connection
+      $conn->close();
+      ?>
     </div>
 
     <!-- Category Tags -->
     <div class="flex flex-wrap justify-center gap-3 mb-16">
       <?php
-      $tags = ['Indoor Luminer', 'LED', 'Smart Wiz', 'Smart Hue', 'Outdoor Luminer'];
+      $tags = ['Indoor Luminer', 'LED','Outdoor Luminer'];
       foreach ($tags as $index => $tag) : ?>
           <button class="px-6 py-2 rounded-full <?php echo $index === 0 ? 'bg-black text-white' : 'border border-gray-300'; ?> hover:bg-gray-100 transition-colors duration-300">
               <?php echo $tag; ?>
