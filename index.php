@@ -1,14 +1,15 @@
 <?php
+include('includes/navbar.php'); // Navbar tetap ditampilkan
 session_start(); // Memulai session
 
 // Cek apakah pengguna sudah login
 if (isset($_SESSION['user_id'])) {
     // Jika sudah login, alihkan ke halaman dashboard
-    header("Location: php/dashboard.php");
+    header("Location: dashboard.php");
     exit();
 }
 
-include('includes/navbar.php'); // Navbar tetap ditampilkan
+
 ?>
 
 <!DOCTYPE html>
@@ -20,7 +21,14 @@ include('includes/navbar.php'); // Navbar tetap ditampilkan
   <title>Sustainable Lighting</title>
   <link rel="stylesheet" href="styles.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
   <script src="assets/js/script.js" defer></script>
+  <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;400;600;800&display=swap');
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+    </style>
 </head>
 
 <body>
@@ -45,6 +53,7 @@ include('includes/navbar.php'); // Navbar tetap ditampilkan
     include('includes/testimoni.php'); // Menampilkan testimoni
     include('includes/stillnotsure.php'); // Menampilkan bagian still not sure
     include('includes/blogsection.php'); // Menampilkan blog
+    include('includes/footer.php'); 
 
 
 
@@ -75,6 +84,7 @@ include('includes/navbar.php'); // Navbar tetap ditampilkan
       });
     });
   </script>
+
 
 </body>
 

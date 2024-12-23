@@ -1,7 +1,8 @@
 <?php
 // Include database connection and navbar
+include('includes/navbar.php'); // Navbar tetap ditampilkan
 include('includes/db.php');
-include('includes/navbar.php');
+
 
 // Query untuk mengambil 1 blog utama dan 3 side blogs
 $sql = "SELECT id, title, content, category, image, visible, display_order 

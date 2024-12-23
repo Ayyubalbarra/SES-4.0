@@ -14,8 +14,9 @@
     </style>
 </head>
 <body>
-    <header class="w-full fixed top-0 z-50">
-        <nav class="container mx-auto flex items-center justify-between px-6 py-4 max-w-screen-xl">
+    <!-- Navigation -->
+    <nav class="w-full fixed top-0 z-50">
+        <div class="container mx-auto flex items-center justify-between px-6 py-4 max-w-screen-xl">
             <!-- Logo -->
             <div class="flex items-center">
                 <svg width="112" height="31" viewBox="0 0 112 31" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -38,7 +39,7 @@
                 class="bg-black text-white text-sm px-6 py-2 rounded-full transition duration-300 ease-in-out transform hover:bg-slate-900 hover:scale-105 hover:shadow-lg cursor-pointer">
                 Book a Consultation
             </a>
-        </nav>
-    </header>
+        </div>
+    </nav>
 </body>
 </html>
