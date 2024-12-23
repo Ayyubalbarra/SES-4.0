@@ -83,9 +83,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </form>
 
             <!-- Register Button -->
-            <button class="register-btn" onclick="window.location.href='Register1.php'">Create Account</button>
+          
             <div class="login">
-                <p>Forgot password? <a href="register1.php">Reset here</a></p>
+                <p>Dont have an account? <a href="register1.php">Register here</a></p>
             </div>
         </div>
     </div>

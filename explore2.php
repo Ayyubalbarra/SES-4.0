@@ -1,179 +1,86 @@
-<?php 
-include('includes/navbarDashboard.php');
-include('includes/db.php');
-
-try {
-    // Fetch products
-    $products = [];
-    $result = $conn->query("SELECT * FROM products ORDER BY created_at DESC");
-    if ($result) {
-        while ($row = $result->fetch_assoc()) {
-            $products[] = $row;
-        }
-    }
-
-    // Fetch categories
-    $categories = [];
-    $result = $conn->query("SELECT DISTINCT category FROM products");
-    if ($result) {
-        while ($row = $result->fetch_assoc()) {
-            $categories[] = $row['category'];
-        }
-    }
-} catch (Exception $e) {
-    die("Database Error: " . $e->getMessage());
-}
-?>
+<?php include 'includes/navbarDashboard.php'; ?>
+<?php include 'includes/db.php'; // File koneksi database ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Lighting Solutions</title>
+    <title>Explore | SES Smart Lighting</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        .category-filter.active {
-            color: #000;
-            font-weight: 600;
-        }
-        .tag.active {
-            background-color: #000;
-            color: #fff;
-        }
-    </style>
 </head>
-<body class="bg-gray-50">
-    <main class="container mx-auto px-4">
-        <!-- Hero Section -->
-        <section class="text-center py-16 bg-gradient-to-r from-gray-50 to-gray-100">
-            <h1 class="text-2xl text-gray-700 mb-3">Discover Our Smart Lighting Solutions</h1>
-            <h2 class="text-4xl font-bold text-gray-900">Transform Your Space with<br/>Intelligent Shine</h2>
-        </section>
+<body class="bg-white text-gray-900">
 
-        <!-- Filter Tags -->
-        <section class="max-w-6xl mx-auto mt-8">
-            <div class="flex flex-wrap justify-center gap-4 mb-8">
-                <button class="tag active px-6 py-2 rounded-full border transition-all hover:bg-black hover:text-white" data-filter="best-pick">Best pick</button>
-                <button class="tag px-6 py-2 rounded-full border transition-all hover:bg-black hover:text-white" data-filter="small-office">Small office kit</button>
-                <button class="tag px-6 py-2 rounded-full border transition-all hover:bg-black hover:text-white" data-filter="huge-office">Huge office kit</button>
+    <!-- Hero Section -->
+    <section class="w-full py-24 bg-white">
+    <div class="container mx-auto px-4 max-w-6xl">
+        <div class="space-y-4">
+            <p class="text-[2rem] font-normal text-gray-900">
+                Discover Our Smart Lighting Solutions
+            </p>
+            <h1 class="text-[5rem] font-normal leading-tight tracking-tight text-gray-900">
+                Transform Your Space with
+                <span class="block">Intelligent Shine</span>
+            </h1>
+        </div>
+    </div>
+</section>
+
+
+    <!-- Products Section -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-6 flex gap-6">
+            <!-- Sidebar -->
+            <div class="w-1/4 p-6 bg-white-100 rounded-lg shadow-md">
+                <h2 class="font-bold text-xl text-gray-800 mb-4">Our Product</h2>
+            
+                <ul class="space-y-4 text-gray-800">
+                <li class="text-sm hover:text-black cursor-pointer"><a href="?">All Products</a></li>
+                    <li class="text-sm hover:text-black cursor-pointer"><a href="?category=Indoor Luminer">Indoor Luminer</a></li>
+                    <li class="text-sm hover:text-black cursor-pointer"><a href="?category=LED">LED</a></li>
+                    <li class="text-sm hover:text-black cursor-pointer"><a href="?category=Outdoor Luminer">Outdoor Luminer</a></li>
+               
+
+                </ul>
             </div>
 
-            <!-- Featured Products Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
-                <?php if (!empty($products)): ?>
-                    <?php foreach($products as $product): ?>
-                        <div class="product-card bg-white rounded-lg shadow-md p-4 cursor-pointer transform transition-all hover:-translate-y-1 hover:shadow-xl"
-                             data-category="<?php echo htmlspecialchars($product['category']); ?>"
-                             data-product-id="<?php echo $product['id']; ?>">
-                            <img src="<?php echo htmlspecialchars($product['image']); ?>" 
-                                 alt="<?php echo htmlspecialchars($product['name']); ?>"
-                                 class="w-full h-48 object-cover rounded-md mb-4"
-                                 onerror="this.src='assets/default-product.jpg'">
-                            <h3 class="text-lg font-semibold text-gray-800"><?php echo htmlspecialchars($product['name']); ?></h3>
-                            <p class="text-gray-600">$<?php echo number_format($product['price'], 2); ?></p>
-                        </div>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <p class="col-span-full text-center text-gray-500">No products found</p>
-                <?php endif; ?>
-            </div>
-        </section>
+            <!-- Product Grid -->
+            <div class="w-3/4 grid grid-cols-2 md:grid-cols-4 gap-8">
+                <?php
+                // Get the selected category from the URL (if set)
+                $category = isset($_GET['category']) ? $_GET['category'] : '';
 
-        <!-- Categories and All Products -->
-        <section class="max-w-6xl mx-auto mt-16 mb-16">
-            <div class="flex flex-wrap gap-8 mb-8">
-                <button class="category-filter active text-lg text-gray-700 hover:text-black transition-colors" 
-                        data-category="all">All Product</button>
-                <?php if (!empty($categories)): ?>
-                    <?php foreach($categories as $category): ?>
-                        <button class="category-filter text-lg text-gray-700 hover:text-black transition-colors"
-                                data-category="<?php echo htmlspecialchars($category); ?>">
-                            <?php echo ucwords(str_replace('-', ' ', $category)); ?>
-                        </button>
-                    <?php endforeach; ?>
-                <?php endif; ?>
-            </div>
-
-            <!-- All Products Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-6" id="products-grid">
-                <?php if (!empty($products)): ?>
-                    <?php foreach($products as $product): ?>
-                        <div class="product-card bg-white rounded-lg shadow-md p-4 cursor-pointer transform transition-all hover:-translate-y-1 hover:shadow-xl"
-                             data-category="<?php echo htmlspecialchars($product['category']); ?>"
-                             data-product-id="<?php echo $product['id']; ?>">
-                            <img src="<?php echo htmlspecialchars($product['image']); ?>" 
-                                 alt="<?php echo htmlspecialchars($product['name']); ?>"
-                                 class="w-full h-48 object-cover rounded-md mb-4"
-                                 onerror="this.src='assets/default-product.jpg'">
-                            <h3 class="text-lg font-semibold text-gray-800"><?php echo htmlspecialchars($product['name']); ?></h3>
-                            <p class="text-gray-600">$<?php echo number_format($product['price'], 2); ?></p>
-                        </div>
-                    <?php endforeach; ?>
-                <?php endif; ?>
-            </div>
-        </section>
-    </main>
-
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Get all product cards
-        const productCards = document.querySelectorAll('.product-card');
-        
-        // Add click event listener to each product card
-        productCards.forEach(card => {
-            card.addEventListener('click', function() {
-                const productId = this.getAttribute('data-product-id');
-                if (productId) {
-                    // Use the correct path to product-info.php
-                    window.location.href = `/SES-4.0/product-info.php?id=${productId}`;
+                // Modify the SQL query to filter by category if a category is selected
+                $query = "SELECT * FROM products";
+                if ($category) {
+                    $query .= " WHERE category = '" . mysqli_real_escape_string($conn, $category) . "'";
                 }
-            });
-        });
-        
-        // Handle category filters
-        const categoryFilters = document.querySelectorAll('.category-filter');
-        categoryFilters.forEach(filter => {
-            filter.addEventListener('click', function() {
-                const category = this.getAttribute('data-category');
-                
-                categoryFilters.forEach(f => f.classList.remove('active'));
-                this.classList.add('active');
-                
-                productCards.forEach(card => {
-                    if (category === 'all' || card.getAttribute('data-category') === category) {
-                        card.style.display = 'block';
-                    } else {
-                        card.style.display = 'none';
-                    }
-                });
-            });
-        });
 
-        // Handle tag filters
-        const tagButtons = document.querySelectorAll('.tag');
-        tagButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                const filter = this.getAttribute('data-filter');
-                
-                tagButtons.forEach(b => b.classList.remove('active'));
-                this.classList.add('active');
-                
-                productCards.forEach(card => {
-                    const category = card.getAttribute('data-category');
-                    if (filter === 'best-pick' && category === 'featured' ||
-                        filter === 'small-office' && category === 'small-office' ||
-                        filter === 'huge-office' && category === 'huge-office') {
-                        card.style.display = 'block';
-                    } else {
-                        card.style.display = 'none';
-                    }
-                });
-            });
-        });
-    });
-    </script>
+                // Query the database
+                $result = mysqli_query($conn, $query);
 
-    <?php include('includes/footer.php'); ?>
+                // Check if products are returned from the database
+                if (mysqli_num_rows($result) > 0) {
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        echo '
+                        <div class="text-center">
+                            <a href="product-info.php?id=' . $row['id'] . '">
+                                <img src="data:image/jpeg;base64,' . base64_encode($row['image']) . '" alt="' . htmlspecialchars($row['name']) . '" class="w-full h-48 object-cover rounded-lg mb-4">
+                                <p class="font-semibold">' . htmlspecialchars($row['name']) . '</p>
+                                <p class="text-gray-500">$' . number_format($row['price'], 2) . '</p>
+                            </a>
+                        </div>';
+                    }
+                } else {
+                    echo '<p class="text-center col-span-4">No products available.</p>';
+                }
+                ?>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <?php include 'includes/footer.php'; ?>
+
 </body>
 </html>

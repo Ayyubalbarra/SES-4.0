@@ -18,9 +18,6 @@ if (!$product) {
     header('Location: explore.php');
     exit;
 }
-
-// Decode JSON specifications
-$specifications = json_decode($product['specifications'], true);
 ?>
 
 <!DOCTYPE html>
@@ -37,8 +34,7 @@ $specifications = json_decode($product['specifications'], true);
             <div class="md:flex">
                 <div class="md:flex-shrink-0 md:w-1/2">
                     <img class="h-full w-full object-cover md:w-full"
-                         src="<?php echo htmlspecialchars($product['image']); ?>"
-
+                         src="data:image/jpeg;base64,<?php echo base64_encode($product['image']); ?>"
                          alt="<?php echo htmlspecialchars($product['name']); ?>">
                 </div>
                 <div class="p-8 md:w-1/2">
@@ -54,19 +50,6 @@ $specifications = json_decode($product['specifications'], true);
                     <p class="mt-4 text-gray-600">
                         <?php echo nl2br(htmlspecialchars($product['description'])); ?>
                     </p>
-
-                    <!-- Specifications -->
-                    <div class="mt-8">
-                        <h2 class="text-xl font-bold text-gray-900 mb-4">Specifications</h2>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <?php foreach ($specifications as $key => $value): ?>
-                            <div class="bg-gray-50 p-4 rounded-lg">
-                                <span class="font-medium text-gray-700"><?php echo htmlspecialchars($key); ?>:</span>
-                                <span class="text-gray-600"><?php echo htmlspecialchars($value); ?></span>
-                            </div>
-                            <?php endforeach; ?>
-                        </div>
-                    </div>
 
                     <!-- Back Button -->
                     <div class="mt-8">
