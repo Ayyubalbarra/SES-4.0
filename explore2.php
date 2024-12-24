@@ -1,3 +1,14 @@
+<?php 
+session_start();
+
+// Mengecek apakah pengguna sudah login
+if (!isset($_SESSION['user_id'])) {
+    // Jika belum login, arahkan ke halaman login
+    header("Location: login1.php");
+    exit();
+}
+?>
+
 <?php include 'includes/navbarDashboard.php'; ?>
 <?php include 'includes/db.php'; // File koneksi database ?>
 

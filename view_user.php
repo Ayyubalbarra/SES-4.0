@@ -36,6 +36,7 @@ if ($id_user > 0) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profil User</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    
 </head>
 <body class="bg-gray-100">
     <div class="container mx-auto py-8">

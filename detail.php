@@ -1,4 +1,12 @@
 <?php
+session_start();
+
+// Mengecek apakah pengguna sudah login
+if (!isset($_SESSION['user_id'])) {
+    // Jika belum login, arahkan ke halaman login
+    header("Location: login1.php");
+    exit();
+}
 include 'includes/db.php';
 
 // Validasi ID dan cek apakah blog visible
@@ -56,7 +64,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
         }
     </style>
 </head>
-<body class="bg-gray-100">
+<body class="bg-white-100">
     <!-- Main Article -->
     <div class="container mx-auto px-4 py-8">
         <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
@@ -130,7 +138,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
 
         <!-- Back Button -->
         <div class="max-w-4xl mx-auto mt-8">
-            <a href="blog.php" class="text-gray-600 hover:text-gray-800">
+            <a href="<?php echo isset($_SESSION['user_id']) ? 'blog2.php' : 'blog.php'; ?>" class="text-gray-600 hover:text-gray-800">
                 ← Back to Articles
             </a>
         </div>

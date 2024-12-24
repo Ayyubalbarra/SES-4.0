@@ -84,8 +84,10 @@ if (isset($_SESSION['user_id'])) {
     });
   </script>
 
- <!-- Footer Section -->
- <?php include 'includes/footer.php'; ?>
+
+
 </body>
+ <!-- Footer Section -->
+ <?php include ('includes/footer.php'); ?>
 
 </html>

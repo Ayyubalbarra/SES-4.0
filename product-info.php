@@ -1,5 +1,12 @@
 <?php
-include('includes/navbar.php'); 
+session_start();
+
+// Mengecek apakah pengguna sudah login
+if (!isset($_SESSION['user_id'])) {
+    // Jika belum login, arahkan ke halaman login
+    header("Location: login1.php");
+    exit();
+}
 include('includes/db.php'); // Include db.php for database connection
 
 // Get the product ID from URL
@@ -53,8 +60,8 @@ if (!$product) {
 
                     <!-- Back Button -->
                     <div class="mt-8">
-                        <a href="explore.php" 
-                           class="inline-block bg-gray-800 text-white px-6 py-3 rounded-lg hover:bg-gray-700 transition-colors">
+                        <a href="<?php echo isset($_SESSION['user_id']) ? 'explore2.php' : 'explore.php'; ?>" 
+                           class="inline-block bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-900 transition-colors">
                             Back to Products
                         </a>
                     </div>

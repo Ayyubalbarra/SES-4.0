@@ -140,7 +140,9 @@ $result = $conn->query($sql);
             </div>
         </main>
     </div>
+    
 </body>
+
 </html>
 
 <?php

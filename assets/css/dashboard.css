@@ -104,6 +104,24 @@ h1 {
     transition: background-color 0.3s ease, transform 0.2s ease; /* Efek animasi */
 }
 
+.buttons {
+ 
+    font-family: "Plus Jakarta Sans", sans-serif;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: black; /* Latar belakang hitam */
+    color: white; /* Teks berwarna putih */
+    padding: 10px 20px; /* Jarak di dalam tombol */
+    font-size: 16px; /* Ukuran font */
+    font-weight: 500; /* Berat font */
+    border: none; /* Hapus border */
+    border-radius: 50px; /* Membuat tombol oval */
+    text-decoration: none; /* Hapus garis bawah link */
+    cursor: pointer; /* Kursor berubah menjadi pointer */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Efek animasi */
+}
+
 .button:hover {
     background-color: #333; /* Warna sedikit lebih terang saat hover */
     transform: scale(1.05); /* Sedikit memperbesar tombol saat hover */

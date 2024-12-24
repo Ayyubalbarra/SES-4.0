@@ -6,6 +6,12 @@
     <title>Dashboard</title>
     <link rel="stylesheet" href="assets/css/navbarDashboard.css">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;400;600;800&display=swap');
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+    </style>
+    <style>
   
   /* General Reset */
 * {

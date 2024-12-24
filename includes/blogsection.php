@@ -128,7 +128,7 @@ $conn->close();
       <div class="flex gap-1">
         <!-- Dropdown Kategori untuk Blog -->
         <select id="category" name="category" class="p-2.5 text-base border border-gray-300 rounded-lg bg-white cursor-pointer" onchange="filterCategory()">
-          <option value="">Pilih Kategori</option>
+          <option value="">category</option>
           <?php foreach ($categories as $category): ?>
             <option value="<?php echo htmlspecialchars($category['category']); ?>" <?php echo ($selectedCategory === $category['category']) ? 'selected' : ''; ?>>
               <?php echo htmlspecialchars($category['category']); ?>

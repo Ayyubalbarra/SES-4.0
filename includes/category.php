@@ -80,7 +80,7 @@ $conn->close();
         <?php
         $tags = ['Indoor Luminer', 'LED', 'Outdoor Luminer'];
         foreach ($tags as $tag) : ?>
-          <a href="?product_category=<?php echo urlencode($tag); ?>">
+          <a href="?product_category=<?php echo urlencode($tag); ?>" class="category-link">
             <button class="px-6 py-2 rounded-full <?php echo ($selectedProductCategory === $tag) ? 'bg-black text-white' : 'border border-gray-300'; ?> hover:bg-gray-100 transition-colors duration-300">
               <?php echo $tag; ?>
             </button>
@@ -89,6 +89,22 @@ $conn->close();
       </div>
     </div>
   </section>
+
+  <!-- Prevent JavaScript Interference -->
+  <script>
+    // Disable any form or alert from being triggered unintentionally
+    // Ensure no form submission on category button click or any alert triggers
+
+    // This will prevent form submission if you are using forms in your code
+    document.querySelectorAll('form').forEach(function(form) {
+      form.addEventListener('submit', function(event) {
+        event.preventDefault(); // Disable form submission
+      });
+    });
+
+    // Ensure no alerts are triggered by accident
+    window.alert = function() {}; // Override the alert function
+  </script>
 
 </body>
 </html>

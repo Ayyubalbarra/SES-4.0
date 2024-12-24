@@ -32,7 +32,7 @@ if ($result->num_rows > 0) {
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $name = $_POST['name'];
     $last_name = $_POST['last_name'];
-    $email = $_POST['email'];
+    $email = $profil['email']; // Email tidak dapat diubah
     $phone_number = $_POST['phone_number'];
     $business_name = $_POST['business_name'];
 
@@ -65,9 +65,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     // Menyiapkan query untuk memperbarui data pengguna
-    $sql = "UPDATE user SET name = ?, last_name = ?, email = ?, phone_number = ?, business_name = ?, avatar = ? WHERE id_user = ?";
+    $sql = "UPDATE user SET name = ?, last_name = ?, phone_number = ?, business_name = ?, avatar = ? WHERE id_user = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssssssi", $name, $last_name, $email, $phone_number, $business_name, $avatar, $user_id);
+    $stmt->bind_param("sssssi", $name, $last_name, $phone_number, $business_name, $avatar, $user_id);
 
     if ($stmt->execute()) {
         echo "<script>alert('Profil berhasil diperbarui!');</script>";
@@ -121,7 +121,7 @@ $conn->close();
         </div>
         <div class="form-group">
             <label for="email">Email</label>
-            <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($profil['email']); ?>" required>
+            <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($profil['email']); ?>" readonly>
         </div>
         <div class="form-group">
             <label for="phone_number">Phone Number</label>

@@ -5,7 +5,7 @@ session_start();
 // Mengecek apakah pengguna sudah login
 if (!isset($_SESSION['user_id'])) {
     // Jika belum login, arahkan ke halaman login
-    header("Location: login.php");
+    header("Location: login1.php");
     exit();
 }
 
@@ -52,14 +52,13 @@ $conn->close();
     <div class="profil-container">
         <div class="avatar">
             <?php
-            // Menampilkan avatar jika ada, atau gambar default jika tidak ada
-            if (!empty($profil['avatar'])) {
-                // Jika avatar ada, tampilkan gambar dari database
-                echo '<img src="data:image/jpeg;base64,' . base64_encode($profil['avatar']) . '" alt="Avatar" />';
-            } else {
-                // Jika avatar tidak ada, tampilkan gambar default
-                echo '<img src="assets/image/default_avatar.jpg" alt="Avatar" />';
-            }
+   if (!empty($profil['avatar'])) {
+    echo '<img src="' . htmlspecialchars($profil['avatar']) . '" alt="Avatar" />';
+} else {
+    echo '<img src="assets/image/default_avatar.jpg" alt="Avatar" />';
+}
+
+    
             ?>
         </div>
         <div class="profil-info">
