@@ -29,7 +29,7 @@
                 Who have gotten their light with us
               </h2>
               <div id="testimonialContent">
-                <p class="mb-6 text-gray-600">
+                <p class="mb-6 text-gray-600" id="testimonialText">
                   I love how effortlessly I can control my lights from my phone. It's not just efficient but also adds a touch of modern elegance to my space.
                 </p>
                 <div class="flex items-center justify-between">
@@ -65,3 +65,41 @@
     </div>
   </div>
 </div>
+
+<script>
+  // Hardcoded testimonial data
+  const testimonials = [
+    {
+      content: "I love how effortlessly I can control my lights from my phone. It's not just efficient but also adds a touch of modern elegance to my space.",
+      author: "Sarah Johnson"
+    },
+    {
+      content: "The lighting system is incredible! It transformed my workspace into a productive and comfortable environment.",
+      author: "John Doe"
+    },
+    {
+      content: "Great experience! The installation was quick, and now my house looks amazing with these smart lights.",
+      author: "Emily Carter"
+    }
+  ];
+
+  let currentIndex = 0;
+
+  // Function to show the previous testimonial
+  function previousTestimonial() {
+    currentIndex = (currentIndex - 1 + testimonials.length) % testimonials.length;
+    updateTestimonial();
+  }
+
+  // Function to show the next testimonial
+  function nextTestimonial() {
+    currentIndex = (currentIndex + 1) % testimonials.length;
+    updateTestimonial();
+  }
+
+  // Function to update the testimonial content
+  function updateTestimonial() {
+    document.getElementById('testimonialText').innerText = testimonials[currentIndex].content;
+    document.getElementById('testimonialAuthor').innerText = testimonials[currentIndex].author;
+  }
+</script>

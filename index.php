@@ -1,6 +1,7 @@
 <?php
-include('includes/navbar.php'); // Navbar tetap ditampilkan
 session_start(); // Memulai session
+include('includes/navbar.php'); // Navbar tetap ditampilkan
+include('includes/db.php'); // Menghubungkan ke database
 
 // Cek apakah pengguna sudah login
 if (isset($_SESSION['user_id'])) {
@@ -8,7 +9,6 @@ if (isset($_SESSION['user_id'])) {
     header("Location: dashboard.php");
     exit();
 }
-
 
 ?>
 
@@ -34,7 +34,7 @@ if (isset($_SESSION['user_id'])) {
 <body>
   <!-- Frame 7 - Hero Section -->
   <div class="Containerlampu">
-    <div id="backgroundWrapper"></div>
+  <div id="backgroundWrapper" style="z-index: -2;"></div>
     <div class="overlay" id="overlay">
       <img src="assets/image/Property 1 Default.svg" alt="Gambar Overlay" class="lampuImage" id="lampuImage">
       <p class="lampuText" id="lampuText">Turn your light up</p>
@@ -53,13 +53,12 @@ if (isset($_SESSION['user_id'])) {
     include('includes/testimoni.php'); // Menampilkan testimoni
     include('includes/stillnotsure.php'); // Menampilkan bagian still not sure
     include('includes/blogsection.php'); // Menampilkan blog
-    include('includes/footer.php'); 
-
-
-
+    
+    
+    
     ?>
   </div>
-
+  
   <script>
     // Skrip tambahan yang sudah ada
     const ctaButtons = document.querySelectorAll('.cta-button, .cta-button-r');
@@ -67,7 +66,7 @@ if (isset($_SESSION['user_id'])) {
         button.addEventListener('click', function() {
             const isLoggedIn = false;
             if (!isLoggedIn) {
-                window.location.href = 'php/Login1.php';
+                window.location.href = 'Login1.php';
             } else {
                 alert('Proceeding to book a consultation...');
             }
@@ -85,7 +84,8 @@ if (isset($_SESSION['user_id'])) {
     });
   </script>
 
-
+ <!-- Footer Section -->
+ <?php include 'includes/footer.php'; ?>
 </body>
 
 </html>

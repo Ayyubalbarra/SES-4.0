@@ -1,5 +1,3 @@
-
-/* Pembungkus latar belakang */
 /* ... gaya CSS lainnya ... */
 .turn-on-text {
   /* ... gaya yang telah dijelaskan sebelumnya ... */
@@ -17,18 +15,36 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
-  background-color: #676767; /* Warna latar belakang default */
-  transition: background-color 1s ease; /* Efek transisi untuk background-color */
-  z-index: -1; /* Agar berada di belakang konten lainnya */
+  height: 100vh; /* Gunakan viewport height */
+  background-color: #676767;
+  transition: background-color 1s ease;
+  z-index: -1;
+  /* Tambahkan */
+  bottom: auto; /* Mencegah wrapper menutupi footer */
 }
 
+/* Tambahkan style untuk memastikan footer tetap terlihat */
+footer {
+  position: relative;
+  z-index: 1;
+  background-color: transparent; /* Pastikan background transparan */
+}
+
+footer .absolute {
+  z-index: 0;
+}
+
+.content-sections {
+  position: relative;
+  z-index: 1;
+}
 /* Styling untuk Containerlampu */
 .Containerlampu {
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: 25px;
   width: 100%;
   height: 100vh; /* Sesuaikan dengan tinggi layar */
 }
@@ -68,7 +84,7 @@
 
 /* Saat dihover, gambar akan berubah */
 .overlay .lampuImage:hover {
-  content: url("Image/menyala.svg"); /* Ganti dengan gambar baru */
+  content: url("assets/image/Property on hover.svg"); /* Ganti dengan gambar baru */
   transform: scale(1.1); /* Membesarkan dan memutar elemen */
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Menambahkan bayangan saat hover */
 }
